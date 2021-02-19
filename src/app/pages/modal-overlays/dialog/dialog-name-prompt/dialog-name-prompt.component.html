@@ -1,0 +1,47 @@
+<nb-card class="card-tamano">
+    <nb-card-header></nb-card-header>
+    <nb-card-body>
+        <input #name nbInput placeholder="Nombre de la Encuesta">
+        <input #descripcion nbInput placeholder="Descripcion">
+        <ng-container *ngFor="let item of preguntas">
+            <nb-card>
+                <nb-card-header>{{item.nombre}}</nb-card-header>
+                <nb-card-body>
+                    <input #respuesta nbInput placeholder="Pregunta">
+                    <ng-container *ngFor="let opcion of item.opciones">
+
+
+                        <input #respuesta nbInput placeholder="{{opcion}}">
+                        <nb-action icon="trash-2-outline"></nb-action>
+
+
+                    </ng-container>
+
+
+                    <div class="">
+                        <button nbButton (click)="insertarRespuesta(item)" [status]="'success'" [size]="'small'" ghost>nueva +</button></div>
+                </nb-card-body>
+                <nb-card-footer>
+
+                </nb-card-footer>
+            </nb-card>
+        </ng-container>
+        <button class="mb-2" nbButton (click)="insertarPregunta()" [status]="'info'" outline>
+            +
+        </button>
+    </nb-card-body>
+    <nb-card-footer>
+        <button class="cancel" nbButton status="danger" (click)="cancel()">Cancelar</button>
+        <button nbButton status="success" (click)="submit(name.value,  descripcion.value)">Aceptar</button>
+    </nb-card-footer>
+</nb-card>
+
+<!-- 
+<button class="mb-2" nbButton (click)="insertarPretgunta()" [status]="'info'" outline>
+    +
+</button>
+<input #pregunta nbInput placeholder="Pregunta">
+
+<input *ngIf="respuesta" #respuesta nbInput placeholder="Respuesta 1">
+        <input #respuesta2 nbInput placeholder="Respuesta 2">
+<input #respuesta3 nbInput placeholder="Respuesta 3"> -->

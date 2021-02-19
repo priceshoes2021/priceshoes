@@ -1,0 +1,22 @@
+<nb-card>
+    <nb-card-header>
+        Asignar Encuestas
+
+    </nb-card-header>
+
+    <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>
+
+
+
+<!-- <nb-card>
+    <nb-card-header>Encuestas</nb-card-header>
+    <nb-card-body>
+        <button nbButton (click)="open3()" [status]="'success'" outline>
+            Añadir Encuesta
+        </button>
+    </nb-card-body>
+</nb-card> -->
