@@ -1,89 +1,109 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NbComponentShape, NbComponentSize, NbComponentStatus } from '@nebular/theme';
 import { SmartTableData } from '../../../@core/data/smart-table';
 import { DialogNamePromptComponent } from '../../modal-overlays/dialog/dialog-name-prompt/dialog-name-prompt.component';
 import { ShowcaseDialogComponent } from '../../modal-overlays/dialog/showcase-dialog/showcase-dialog.component';
 import { NbDialogService } from '@nebular/theme';
+import { SERVICES } from "../../../config/webservices";
+import { ServicesProvider } from "../../../config/services";
 @Component({
   selector: 'ngx-accordion',
   templateUrl: 'gestionar-encuestas.component.html',
   styleUrls: ['gestionar-encuestas.component.scss'],
 })
-export class GestionarEncuestaComponent {
-  settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
-      nombre_encuesta: {
-        title: 'Nombre',
-        type: 'string',
-      },
-      descripcion: {
-        title: 'Descripción',
-        type: 'string',
-      },
-      detalle : {
-        title: 'Detalles',
-        type: 'string',
-      },
+export class GestionarEncuestaComponent implements OnInit {
+  encuestas = []
 
-    },
-  };
-  names: string[] = [];
-  source: LocalDataSource = new LocalDataSource();
-  data =[];
-  constructor(private service: SmartTableData, private dialogService: NbDialogService) {
+
+  constructor(private service: SmartTableData, private dialogService: NbDialogService, private ServicesProvider: ServicesProvider,) {
     /* const data = this.service.getData(); */
-    this.data = [
-      {id: "123", nombre_encuesta:"Encuesta de Satisfacción de Clientes", descripcion:"", detalle:""},
-      {id: "124", nombre_encuesta:"Encuesta de Motivo de no compra", descripcion:"", detalle:""},
+/*     this.encuestas = [
+      { id: "123", nombre_encuesta: "Encuesta de Satisfacción de Clientes", fecha_encuesta: "19/02/2021" },
+      { id: "124", nombre_encuesta: "Encuesta de Motivo de no compra", fecha_encuesta: "21/02/2021", },
 
-      
-    ]
-    this.source.load(this.data);
-    console.log(this.data)
+
+    ] */
+
+  }
+  ngOnInit() {
+    this.fn_listarEncuesta()
   }
 
   onDeleteConfirm(event): void {
+    console.log(event)
     if (window.confirm('Seguro que quiere eliminar esta encuesta')) {
-      event.confirm.resolve();
+      this.removeItemFromArr(this.encuestas, event)
+      console.log(this.encuestas)
     } else {
       event.confirm.reject();
     }
   }
 
 
-  open3() {
+  abrirFormulario() {
     this.dialogService.open(DialogNamePromptComponent)
-      .onClose.subscribe(name  => name && this.data.push( {id: "322", nombre_encuesta:name.nombre, descripcion:name.descripcion, detalle:""}) && this.source.load(this.data) && console.log(name));
-      console.log(this.names)
-      
+      .onClose.subscribe(name =>  this.fn_agregarEncuesta());
+
   }
 
-  
+
   open() {
     this.dialogService.open(ShowcaseDialogComponent, {
       context: {
         title: 'Adicionar Encuesta',
       },
     });
+  }
+
+  removeItemFromArr(arr, item) {
+    console.log(arr, item)
+
+
+    arr.splice(item, 1);
+
+  }
+
+  fn_listarEncuesta() {
+
+    this.ServicesProvider.get(SERVICES.LISTAR_ENCUESTAS, {}).then(response => {
+
+      this.encuestas = response
+      console.log(response);
+
+    });
+
+
+  }
+  oEncuesta:{}
+  fn_agregarEncuesta(){
+    this.oEncuesta={
+      "nombre":"Encuesta de otra prueba",
+      "descripcion":"",
+      "preguntas":[
+         {
+            "nombre":"Como describiría la atencion?",
+            "respuestas":[
+               "Buena",
+               "Regular",
+               "Mala"
+            ]
+         },
+         {
+            "nombre":"Como describiría la tienda?",
+            "respuestas":[
+               "Buena",
+               "Regular",
+               "Mala"
+            ]
+         }
+      ] 
+    }
+    this.ServicesProvider.post(SERVICES.AGREGAR_ENCUESTAS, this.oEncuesta).then(response => {
+      console.log(response)
+      this.fn_listarEncuesta()
+      this.ServicesProvider.fn_generarAlerta("exito", "Guardado con éxito")
+    })
   }
 
 

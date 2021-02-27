@@ -1,12 +1,30 @@
 <nb-card>
-    <nb-card-header>
-        Asignar Encuestas
+    <nb-card-header class="header-color-card">
+        <i class="mx-1 fa fa-tasks icon pointer"></i> Listado de Encuestas
 
     </nb-card-header>
 
     <nb-card-body>
-        <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
-        </ng2-smart-table>
+        <!--         <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+        </ng2-smart-table> -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Detalle</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let item of encuestas;let indice=index">
+                <tr>
+                    <th scope="row">{{item.pk_tipoEncuesta}}</th>
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.descripcion}}</td>
+                    <td> <i class="mx-1 fa fa-check-circle icon pointer" nbTooltip="Asignar Encuesta" nbTooltipPlacement="top" nbTooltipStatus="warning"></i> </td>
+                </tr>
+            </tbody>
+        </table>
     </nb-card-body>
 </nb-card>
 

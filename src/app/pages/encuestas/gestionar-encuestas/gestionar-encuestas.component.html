@@ -1,22 +1,44 @@
+<a href="#" class="float">
+    <i class="fa fa-plus my-float"></i>
+</a>
 <nb-card>
-    <nb-card-header>
-        Listado de Encuestas
+    <nb-card-header class="header-color-card">
+        <i class="mx-1 fa fa-tasks icon pointer"></i> Listado de Encuestas<i class="mx-1 posicion-agregar fa fa-plus icon pointer" nbTooltip="Agregar Encuesta" nbTooltipPlacement="left" (click)="abrirFormulario()"></i>
 
     </nb-card-header>
 
     <nb-card-body>
-        <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
-        </ng2-smart-table>
+        <!--         <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+        </ng2-smart-table> -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Fecha de Creacion</th>
+                    <th scope="col">Detalle</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let item of encuestas;let indice=index">
+                <tr>
+                    <th scope="row">{{item.pk_tipoEncuesta}}</th>
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.descripcion}}</td>
+                    <td> <i class="mx-1 fa fa-pen icon pointer" nbTooltip="Editar Encuesta" nbTooltipPlacement="top" nbTooltipStatus="warning"></i><i class="mx-1 fa fa-trash icon" nbTooltip="Eliminar Encuesta" nbTooltipPlacement="top" nbTooltipStatus="danger"
+                            (click)="onDeleteConfirm(indice)"></i> </td>
+                </tr>
+            </tbody>
+        </table>
     </nb-card-body>
 </nb-card>
 
 
-
+<!-- 
 <nb-card>
     <nb-card-header>Encuestas</nb-card-header>
     <nb-card-body>
-        <button nbButton (click)="open3()" [status]="'success'" outline>
+        <button nbButton (click)="abrirFormulario()" [status]="'success'" outline>
             Añadir Encuesta
         </button>
     </nb-card-body>
-</nb-card>
+</nb-card> -->

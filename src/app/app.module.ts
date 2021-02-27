@@ -10,7 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { ServicesProvider } from '../app/config/services';
+import { HttpModule } from '@angular/http';
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -25,8 +28,10 @@ import {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    HttpModule,
     AppRoutingModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
@@ -39,6 +44,9 @@ import {
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+  ],
+  providers: [
+    ServicesProvider,
   ],
   bootstrap: [AppComponent],
 })

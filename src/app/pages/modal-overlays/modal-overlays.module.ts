@@ -31,7 +31,7 @@ import {
   NgxPopoverTabsComponent,
 } from './popovers/popover-examples.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
-
+import {  ReactiveFormsModule } from '@angular/forms';
 
 const COMPONENTS = [
   ModalOverlaysComponent,
@@ -59,6 +59,7 @@ const ENTRY_COMPONENTS = [
 
 const MODULES = [
   FormsModule,
+  ReactiveFormsModule,
   ThemeModule,
   ModalOverlaysRoutingModule,
   NbDialogModule.forChild(),

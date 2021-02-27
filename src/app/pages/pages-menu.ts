@@ -51,6 +51,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'file-text-outline',
     children: [
       {
+        title: 'Aplicar Encuestas',
+        link: '/pages/encuestas/aplicar-encuestas',
+      },
+      {
         title: 'Gestionar Encuestas',
         link: '/pages/encuestas/gestionar-encuestas',
       },

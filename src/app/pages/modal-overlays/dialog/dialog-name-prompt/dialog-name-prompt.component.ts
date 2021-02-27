@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import Swal from 'sweetalert2';
+import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 @Component({
   selector: 'ngx-dialog-name-prompt',
   templateUrl: 'dialog-name-prompt.component.html',
   styleUrls: ['dialog-name-prompt.component.scss'],
 })
-export class DialogNamePromptComponent {
+export class DialogNamePromptComponent implements OnInit {
+  encuesta: FormGroup;
   respuesta = false
   contadorPreguntas = 1
   preguntas = [{
@@ -18,16 +21,25 @@ export class DialogNamePromptComponent {
     ]
 
   }];
+  ngOnInit() {
+     this.encuesta = this.fb.group({
+      nombre_encuesta: ['', [Validators.required, Validators.minLength(2)]],
+        descripcion_encuesta: ['', Validators.required],
+      /*   pregunta_encuesta: ['', Validators.required] */
+    }); 
+  }
+  constructor(protected ref: NbDialogRef<DialogNamePromptComponent>, private fb: FormBuilder) { 
 
-  constructor(protected ref: NbDialogRef<DialogNamePromptComponent>) { }
+  }
 
   cancel() {
     this.ref.close();
   }
 
   submit(name, descripcion) {
-    console.log(descripcion)
+    console.log(descripcion, this.encuesta.get("nombre_encuesta").value)
     let preguntas = { nombre: name, descripcion: descripcion }
+    
     this.ref.close(preguntas);
 
   }
@@ -93,5 +105,11 @@ export class DialogNamePromptComponent {
     })
 
   }
+
+  fn_guardarEncuesta(){
+    console.log(this.encuesta.get("nombre_encuesta").value, this.encuesta.get("descripcion_encuesta").value)
+    this.ref.close();
+  }
+
 
 }

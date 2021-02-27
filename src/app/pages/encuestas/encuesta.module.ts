@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GestionarEncuestaComponent } from './gestionar-encuestas/gestionar-encuestas.component';
 import { EncuestasRoutingModule } from './encuestas-routing.module';
@@ -11,9 +13,11 @@ import {
   NbRouteTabsetModule,
   NbStepperModule,
   NbTabsetModule, NbUserModule,
+  NbTooltipModule,
 } from '@nebular/theme';
 import { EncuestaComponent } from './encuesta.component';
 import { AsignarEncuestaComponent } from './asignar-encuestas/asignar-encuestas.component';
+import { AplicarEncuestaComponent } from './aplicar-encuestas/aplicar-encuestas.component';
 
 @NgModule({
   imports: [
@@ -28,12 +32,15 @@ import { AsignarEncuestaComponent } from './asignar-encuestas/asignar-encuestas.
     NbAccordionModule,
     NbUserModule,
     EncuestasRoutingModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    CommonModule,
+    NbTooltipModule
   ],
   declarations: [
     EncuestaComponent,
     GestionarEncuestaComponent,
-    AsignarEncuestaComponent
+    AsignarEncuestaComponent,
+    AplicarEncuestaComponent
   ],
   providers: [
   ],
