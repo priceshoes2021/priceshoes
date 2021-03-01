@@ -11,6 +11,7 @@ import {
   NbTabsetModule,
   NbTooltipModule,
   NbWindowModule,
+  NbDatepickerModule, NbIconModule,
 } from '@nebular/theme';
 
 // modules
@@ -31,7 +32,9 @@ import {
   NgxPopoverTabsComponent,
 } from './popovers/popover-examples.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
-import {  ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ModalEncuestaComponent } from './dialog/modal-encuesta/modal-encuesta.component';
+import { EncuestaComponent } from '../encuestas/encuesta.component';
 
 const COMPONENTS = [
   ModalOverlaysComponent,
@@ -39,6 +42,7 @@ const COMPONENTS = [
   DialogComponent,
   ShowcaseDialogComponent,
   DialogNamePromptComponent,
+  ModalEncuestaComponent,
   WindowComponent,
   WindowFormComponent,
   PopoversComponent,
@@ -51,6 +55,7 @@ const COMPONENTS = [
 const ENTRY_COMPONENTS = [
   ShowcaseDialogComponent,
   DialogNamePromptComponent,
+  ModalEncuestaComponent,
   WindowFormComponent,
   NgxPopoverCardComponent,
   NgxPopoverFormComponent,
@@ -70,6 +75,7 @@ const MODULES = [
   NbPopoverModule,
   NbButtonModule,
   NbInputModule,
+  NbDatepickerModule, NbIconModule,
   NbSelectModule,
   NbTooltipModule,
 ];

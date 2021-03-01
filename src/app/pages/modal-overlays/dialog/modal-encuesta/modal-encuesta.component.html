@@ -1,0 +1,45 @@
+<nb-card class="card-tamano">
+    <nb-card-header class="header-color-card"> <i class="mx-1 fa fa-plus-circle icon pointer"></i>Agregar Encuesta
+    </nb-card-header>
+
+    <nb-card-body>
+        <form [formGroup]="formAsignarEncuesta">
+
+
+            <nb-card>
+                <nb-card-header>Tienda</nb-card-header>
+                <nb-card-body>
+                    <nb-select [formControl]="formAsignarEncuesta.controls['id_tienda']" class="w-100" selected="1">
+                        <nb-option *ngFor="let tienda of aTiendas" value="{{tienda.pk_tienda}}">{{tienda.nombre}}</nb-option>
+
+                    </nb-select>
+                </nb-card-body>
+            </nb-card>
+
+
+            <nb-card>
+                <nb-card-header>Fechas de Apertura y Cierre</nb-card-header>
+                <nb-card-body>
+                    <input nbInput placeholder="Selecciona el rango" [nbDatepicker]="rangepicker" [formControl]="formAsignarEncuesta.controls['fechas_asignar']">
+                    <nb-rangepicker #rangepicker></nb-rangepicker>
+                </nb-card-body>
+            </nb-card>
+
+        </form>
+
+    </nb-card-body>
+    <nb-card-footer>
+        <button class="cancel" nbButton status="danger" (click)="cancel()">Cancelar</button>
+        <button nbButton type="button" (click)="fn_guardarEncuesta()" status="success">Aceptar</button>
+    </nb-card-footer>
+</nb-card>
+
+<!-- 
+<button class="mb-2" nbButton (click)="insertarPretgunta()" [status]="'info'" outline>
+    +
+</button>
+<input #pregunta nbInput placeholder="Pregunta">
+
+<input *ngIf="respuesta" #respuesta nbInput placeholder="Respuesta 1">
+        <input #respuesta2 nbInput placeholder="Respuesta 2">
+<input #respuesta3 nbInput placeholder="Respuesta 3"> -->

@@ -15,7 +15,7 @@
                 <tr>
                     <th scope="col">Código</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Fecha de Creacion</th>
+                    <th scope="col">Descripción</th>
                     <th scope="col">Detalle</th>
                 </tr>
             </thead>
@@ -24,8 +24,8 @@
                     <th scope="row">{{item.pk_tipoEncuesta}}</th>
                     <td>{{item.nombre}}</td>
                     <td>{{item.descripcion}}</td>
-                    <td> <i class="mx-1 fa fa-pen icon pointer" nbTooltip="Editar Encuesta" nbTooltipPlacement="top" nbTooltipStatus="warning"></i><i class="mx-1 fa fa-trash icon" nbTooltip="Eliminar Encuesta" nbTooltipPlacement="top" nbTooltipStatus="danger"
-                            (click)="onDeleteConfirm(indice)"></i> </td>
+                    <td> <i class="mx-1 fa fa-pen icon pointer color_iconos" nbTooltip="Editar Encuesta" nbTooltipPlacement="top" nbTooltipStatus="warning"></i><i class="color_iconos mx-1 fa fa-trash icon" nbTooltip="Eliminar Encuesta" nbTooltipPlacement="top"
+                            nbTooltipStatus="danger" (click)="fn_eliminarModelo(item.pk_tipoEncuesta)"></i> </td>
                 </tr>
             </tbody>
         </table>

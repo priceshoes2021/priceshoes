@@ -3,33 +3,57 @@
     </nb-card-header>
 
     <nb-card-body>
-        <form [formGroup]="encuesta">
+        <form [formGroup]="formEncuesta">
 
             <input nbInput placeholder="Nombre de la Encuesta" type="text" formControlName="nombre_encuesta">
             <input nbInput placeholder="Descripcion" formControlName="descripcion_encuesta">
 
 
-            <ng-container *ngFor="let item of preguntas; let i=index">
+            <ng-container formArrayName="pregunta_encuesta" *ngFor="let pregunta of pregunta_encuesta.controls; let i=index">
 
                 <nb-card>
 
-                    <nb-card-header>{{item.nombre}}</nb-card-header>
+                    <nb-card-header>Pregunta {{i}}</nb-card-header>
                     <nb-card-body>
 
-                        <input nbInput placeholder="Pregunta">
-                        <ng-container *ngFor="let opcion of item.opciones">
+                        <div [formGroupName]="i">
+                            <div class="form-group row">
+                                <div class="col-md-11">
+                                    <!--   <input type="text" [attr.id]="'item' + i" class="form-control" formControlName="nombre_pregunta"> -->
+                                    <input nbInput placeholder="Pregunta" class="form-control" formControlName="nombre_pregunta">
+                                </div>
+                                <div class="col-md-1">
+
+                                    <i class="color_iconos mx-1 fa fa-trash icon" nbTooltip="Eliminar Encuesta" nbTooltipPlacement="top" nbTooltipStatus="danger" (click)="fn_eliminarPregunta(i)"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group">
+                                    <div formArrayName="respuesta_encuesta">
+                                        <div class="row" *ngFor="let respuesta of respuesta_encuesta.controls; let j=index" [formGroupName]="j">
+                                            <div class="col-md-11">
+                                                <input nbInput placeholder="Respuesta" class="form-control" formControlName="respuesta_enc">
+                                            </div>
+
+                                            <div class="col-md-1">
+
+                                                <i class="color_iconos mx-1 fa fa-trash icon" nbTooltip="Eliminar Encuesta" nbTooltipPlacement="top" nbTooltipStatus="danger" (click)="fn_eliminarRespuesta(i)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
-                            <input nbInput placeholder="{{opcion}}">
+                        </div>
 
-
-
-                        </ng-container>
 
 
                         <div class="">
-                            <button type="submit" nbButton (click)="insertarRespuesta(item, i)" [status]="'success'" [size]="'small'" ghost>nueva +</button>
+                            <button type="submit" nbButton (click)="fn_agregarRespuesta()" [status]="'success'" [size]="'small'" ghost>Respuestas +</button>
                         </div>
+
+
 
                     </nb-card-body>
                     <nb-card-footer>
@@ -38,10 +62,13 @@
                 </nb-card>
 
             </ng-container>
-            <button class="mb-2" nbButton (click)="insertarPregunta()" [status]="'info'" outline>
-            +
-        </button>
+
+            <button class="mb-2" nbButton (click)="fn_agregarPregunta()" [status]="'info'" outline>
+                Añadir preguntas
+            </button>
+
         </form>
+
     </nb-card-body>
     <nb-card-footer>
         <button class="cancel" nbButton status="danger" (click)="cancel()">Cancelar</button>

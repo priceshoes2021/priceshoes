@@ -7,6 +7,8 @@ import { ShowcaseDialogComponent } from '../../modal-overlays/dialog/showcase-di
 import { NbDialogService } from '@nebular/theme';
 import { SERVICES } from "../../../config/webservices";
 import { ServicesProvider } from "../../../config/services";
+
+import Swal from 'sweetalert2';
 @Component({
   selector: 'ngx-accordion',
   templateUrl: 'gestionar-encuestas.component.html',
@@ -106,5 +108,45 @@ export class GestionarEncuestaComponent implements OnInit {
     })
   }
 
+
+  
+  fn_eliminarModelo(id) {
+    console.log(id)
+    Swal.fire({
+      title: '¿Seguro que quieres eliminar esta encuesta?',
+      text: "Si la eliminas no podrás recuperarla",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#e62a87',
+      showLoaderOnConfirm: true,
+      confirmButtonText: 'Si, Eliminar',
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ServicesProvider.preloaderOn();
+        console.log(id);
+
+        let pk_tipoEncuesta = {
+          pk_tipoEncuesta: id
+        };
+        this.ServicesProvider.post(SERVICES.ELIMINAR_ENCUESTA + id).then(response => {
+          console.log(response);
+          this.fn_listarEncuesta();
+          Swal.fire(
+            {  icon: 'success',
+            title: 'Encuesta Eliminada con Éxito',
+            showConfirmButton: false,
+            timer: 1500}
+            
+          );
+          this.ServicesProvider.preloaderOff();
+        });
+
+      }
+    });
+
+
+
+  }
 
 }

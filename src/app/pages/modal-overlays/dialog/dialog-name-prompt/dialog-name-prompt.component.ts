@@ -1,7 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import Swal from 'sweetalert2';
-import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, FormArray }  from '@angular/forms';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 @Component({
   selector: 'ngx-dialog-name-prompt',
@@ -9,9 +9,11 @@ import {FormsModule,ReactiveFormsModule} from '@angular/forms';
   styleUrls: ['dialog-name-prompt.component.scss'],
 })
 export class DialogNamePromptComponent implements OnInit {
-  encuesta: FormGroup;
+  formEncuesta: FormGroup;
   respuesta = false
   contadorPreguntas = 1
+  aRespuestas=[]
+  respuestas=""
   preguntas = [{
     nombre: (this.contadorPreguntas) + ". " + "Pregunta",
     opciones: [
@@ -22,22 +24,65 @@ export class DialogNamePromptComponent implements OnInit {
 
   }];
   ngOnInit() {
-     this.encuesta = this.fb.group({
+     this.formEncuesta = this.fb.group({
       nombre_encuesta: ['', [Validators.required, Validators.minLength(2)]],
-        descripcion_encuesta: ['', Validators.required],
-      /*   pregunta_encuesta: ['', Validators.required] */
+      descripcion_encuesta: ['', Validators.required],
+      pregunta_encuesta: this.fb.array([]),
+      respuesta_encuesta: this.fb.array([this.fb.group({respuesta_enc:['']})])
     }); 
   }
   constructor(protected ref: NbDialogRef<DialogNamePromptComponent>, private fb: FormBuilder) { 
 
   }
 
+  get nombre_encuesta(){
+    return this.formEncuesta.get("nombre_encuesta")
+  }
+  get descripcion_encuesta(){
+    return this.formEncuesta.get("descripcion_encuesta")
+  }
+
+  
+  public get pregunta_encuesta() {
+    return this.formEncuesta.get("pregunta_encuesta") as FormArray;
+  }
+  public get respuesta_encuesta() {
+    return this.formEncuesta.get("respuesta_encuesta") as FormArray;
+  }
+  
+  fn_agregarPregunta(){
+    const preguntasFormGroup = this.fb.group({
+      nombre_pregunta:"",
+     /*  respuesta: this.fb.array([this.fn_agregarRespuesta()]) */
+    })
+    this.pregunta_encuesta.push(preguntasFormGroup)
+  }
+
+  fn_agregarRespuesta(){
+    const respuestas_encuesta = <FormArray>this.formEncuesta.controls['respuesta_encuesta']
+    respuestas_encuesta.push(this.fb.group({respuesta_enc:[]}));
+   
+  } 
+
+  fn_eliminarPregunta(indice:number){
+    this.pregunta_encuesta.removeAt(indice);
+  }
+
+  fn_eliminarRespuesta(indice:number){
+   this.respuesta_encuesta.removeAt(indice); 
+  }
+
+  fn_refrescarFormulario(){
+    this.pregunta_encuesta.controls.slice(0, this.pregunta_encuesta.length);
+  }
+
+
   cancel() {
     this.ref.close();
   }
 
   submit(name, descripcion) {
-    console.log(descripcion, this.encuesta.get("nombre_encuesta").value)
+    console.log(descripcion, this.formEncuesta.get("nombre_encuesta").value)
     let preguntas = { nombre: name, descripcion: descripcion }
     
     this.ref.close(preguntas);
@@ -107,9 +152,11 @@ export class DialogNamePromptComponent implements OnInit {
   }
 
   fn_guardarEncuesta(){
-    console.log(this.encuesta.get("nombre_encuesta").value, this.encuesta.get("descripcion_encuesta").value)
-    this.ref.close();
+/*     console.log(this.encuesta.get("nombre_encuesta").value, this.encuesta.get("descripcion_encuesta").value)
+    this.ref.close(); */
   }
+
+
 
 
 }

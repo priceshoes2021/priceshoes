@@ -4,6 +4,7 @@ import { EncuestaComponent } from './encuesta.component';
 import { GestionarEncuestaComponent } from './gestionar-encuestas/gestionar-encuestas.component';
 import { AsignarEncuestaComponent } from './asignar-encuestas/asignar-encuestas.component';
 import { AplicarEncuestaComponent } from './aplicar-encuestas/aplicar-encuestas.component';
+import { InformesEncuestaComponent } from './informes-encuestas/informes-encuestas.component';
 const routes: Routes = [{
     path: '',
     component: EncuestaComponent,
@@ -19,6 +20,10 @@ const routes: Routes = [{
         {
             path: 'asignar-encuestas',
             component: AsignarEncuestaComponent,
+        },
+        {
+            path: 'informes-encuestas',
+            component: InformesEncuestaComponent,
         },
     ],
 }];

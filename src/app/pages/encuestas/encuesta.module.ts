@@ -18,8 +18,15 @@ import {
 import { EncuestaComponent } from './encuesta.component';
 import { AsignarEncuestaComponent } from './asignar-encuestas/asignar-encuestas.component';
 import { AplicarEncuestaComponent } from './aplicar-encuestas/aplicar-encuestas.component';
+import { InformesEncuestaComponent } from './informes-encuestas/informes-encuestas.component';
+
+
+
 
 @NgModule({
+
+
+
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -34,14 +41,16 @@ import { AplicarEncuestaComponent } from './aplicar-encuestas/aplicar-encuestas.
     EncuestasRoutingModule,
     Ng2SmartTableModule,
     CommonModule,
-    NbTooltipModule
+    NbTooltipModule,
+  
+
   ],
-  declarations: [
-    EncuestaComponent,
+
+  declarations: [EncuestaComponent,
     GestionarEncuestaComponent,
     AsignarEncuestaComponent,
-    AplicarEncuestaComponent
-  ],
+    AplicarEncuestaComponent,
+    InformesEncuestaComponent,],
   providers: [
   ],
 })

@@ -64,7 +64,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Informes',
-        link: '/pages/layout/list',
+        link: '/pages/encuestas/informes-encuestas',
       }
     ],
   },
