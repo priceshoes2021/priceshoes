@@ -7,8 +7,6 @@ import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { ComprasComponent } from './compras/compras.component';
 import { VisitantesComponent } from './visitantes/visitantes.component';
-import { EncuestaModule } from './encuestas/encuesta.module';
-
 
 
 const routes: Routes = [{
@@ -41,6 +39,11 @@ const routes: Routes = [{
       loadChildren: () => import('./encuestas/encuesta.module')
         .then(m => m.EncuestaModule),
     }, 
+     {
+      path: 'inventario',
+      loadChildren: () => import('./inventario/inventario.module')
+        .then(m => m.InventarioModule),
+    },  
     {
       path: 'forms',
       loadChildren: () => import('./forms/forms.module')

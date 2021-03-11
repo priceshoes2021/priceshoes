@@ -86,7 +86,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Rotación',
-        link: '/pages/layout/accordion',
+        link: '/pages/inventario/rotacion',
       },
       {
         title: 'Inventario',
@@ -172,7 +172,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',
     link: '/pages/iot-dashboard',
   },
-  {
+/*   {
     title: 'FEATURES',
     group: true,
   },
@@ -403,5 +403,5 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/auth/reset-password',
       },
     ],
-  },
+  }, */
 ];

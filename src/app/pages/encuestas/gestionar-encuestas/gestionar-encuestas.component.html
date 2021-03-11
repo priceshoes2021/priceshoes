@@ -4,13 +4,12 @@
 <nb-card>
     <nb-card-header class="header-color-card">
         <i class="mx-1 fa fa-tasks icon pointer"></i> Listado de Encuestas<i class="mx-1 posicion-agregar fa fa-plus icon pointer" nbTooltip="Agregar Encuesta" nbTooltipPlacement="left" (click)="abrirFormulario()"></i>
-
     </nb-card-header>
 
     <nb-card-body>
         <!--         <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
         </ng2-smart-table> -->
-        <table class="table">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th scope="col">Código</th>
@@ -19,19 +18,26 @@
                     <th scope="col">Detalle</th>
                 </tr>
             </thead>
-            <tbody *ngFor="let item of encuestas;let indice=index">
+            <tbody *ngFor="let item of encuestas; let indice = index">
                 <tr>
-                    <th scope="row">{{item.pk_tipoEncuesta}}</th>
-                    <td>{{item.nombre}}</td>
-                    <td>{{item.descripcion}}</td>
-                    <td> <i class="mx-1 fa fa-pen icon pointer color_iconos" nbTooltip="Editar Encuesta" nbTooltipPlacement="top" nbTooltipStatus="warning"></i><i class="color_iconos mx-1 fa fa-trash icon" nbTooltip="Eliminar Encuesta" nbTooltipPlacement="top"
-                            nbTooltipStatus="danger" (click)="fn_eliminarModelo(item.pk_tipoEncuesta)"></i> </td>
+                    <th scope="row">{{ item.pk_tipoEncuesta }}</th>
+                    <td>{{ item.nombre }}</td>
+                    <td>{{ item.descripcion }}</td>
+                    <td>
+                        <i class="mx-1 fa fa-pen icon pointer" nbTooltip="Editar Encuesta" nbTooltipPlacement="top" nbTooltipStatus="info"></i
+            ><i
+              class="mx-1 fa fa-trash icon"
+              nbTooltip="Eliminar Encuesta"
+              nbTooltipPlacement="top"
+              nbTooltipStatus="info"
+              (click)="fn_eliminarModelo(item.pk_tipoEncuesta)"
+            ></i>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </nb-card-body>
 </nb-card>
-
 
 <!-- 
 <nb-card>

@@ -38,4 +38,24 @@
             width: 100%;
         }
     }
+    .texto-azul {
+        color: #33bdff !important;
+    }
+    .btn-azul {
+        background-color: #33bdff;
+        border-color: #6bafd7;
+        color: #ffffff;
+    }
+    a.su-button.su-button-style-default:visited {
+        background-color: green!important;
+        border-color: green!important;
+        border: 2px solid black!important;
+    }
+    .icon-size {
+        font-size: 25px;
+    }
+    .posicion-cerrar-encuesta {
+        position: absolute;
+        right: 10px;
+    }
 }

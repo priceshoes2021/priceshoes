@@ -30,7 +30,9 @@ export class ModalEncuestaComponent implements OnInit {
     this.formAsignarEncuesta = this.fb.group({
       id_tienda: ['', [Validators.required, Validators.minLength(2)]],
       id_encuesta: ['', Validators.required],
-      fechas_asignar: ['', Validators.required],
+      fecha_apertura: ['', Validators.required],
+      fecha_cierre: ['', Validators.required],
+
 
     });
 
@@ -49,8 +51,11 @@ export class ModalEncuestaComponent implements OnInit {
   }
 
 
-  public get fechas_asignar() {
-    return this.formAsignarEncuesta.get("fechas_asignar")
+  public get fecha_apertura() {
+    return this.formAsignarEncuesta.get("fecha_apertura")
+  }
+  public get fecha_cierre() {
+    return this.formAsignarEncuesta.get("fecha_cierre")
   }
 
 
@@ -106,11 +111,11 @@ export class ModalEncuestaComponent implements OnInit {
   fn_guardarEncuesta() {
     /*  console.log(this.encuesta.get("nombre_encuesta").value, this.encuesta.get("descripcion_encuesta").value) */
     console.log(this.id_tienda.value)
-    console.log(this.fechas_asignar.value)
+    console.log(this.fecha_cierre.value)
     let encuesta_asignada={
       id_tienda: this.id_tienda.value,
-      fechaApertura:this.fechas_asignar.value['start'],
-      fechaCierre:this.fechas_asignar.value['end']
+      fechaApertura:this.fecha_apertura.value,
+      fechaCierre:this.fecha_cierre.value
     }
     this.ref.close(encuesta_asignada);
     
@@ -127,6 +132,13 @@ export class ModalEncuestaComponent implements OnInit {
 
  fn_asignarEncuesta(){
 
+
+  
  }
+
+ 
+  
+
+
 
 }

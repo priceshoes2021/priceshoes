@@ -4,10 +4,11 @@
 
     </nb-card-header>
 
+
     <nb-card-body>
         <!--         <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
         </ng2-smart-table> -->
-        <table class="table">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th scope="col">Código</th>
@@ -62,7 +63,7 @@
                     <td>{{item.tienda}}</td>
 
                     <td> <i class="mx-1 fa fa-pen icon pointer" nbTooltip="Editar Encuesta" (click)="abrirFormulario(item.pk_tipoEncuesta)" nbTooltipPlacement="top" nbTooltipStatus="warning"></i>
-                        <i class="mx-1 fa fa-trash icon pointer" nbTooltip="Eliminar Asignaciones" (click)="abrirFormulario(item.pk_tipoEncuesta)" nbTooltipPlacement="top" nbTooltipStatus="warning"></i>
+                        <i class="mx-1 fa fa-trash icon pointer" nbTooltip="Eliminar Asignaciones" (click)="fn_eliminarEncuesta_Asignada(item.pk_aplicacionEncuesta, item.tbl_tienda_pk_tienda)" nbTooltipPlacement="top" nbTooltipStatus="warning"></i>
                     </td>
                 </tr>
             </tbody>

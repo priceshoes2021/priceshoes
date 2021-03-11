@@ -16,14 +16,23 @@
                 </nb-card-body>
             </nb-card>
 
-
             <nb-card>
-                <nb-card-header>Fechas de Apertura y Cierre</nb-card-header>
+                <nb-card-header>Fecha de Apertura</nb-card-header>
                 <nb-card-body>
-                    <input nbInput placeholder="Selecciona el rango" [nbDatepicker]="rangepicker" [formControl]="formAsignarEncuesta.controls['fechas_asignar']">
-                    <nb-rangepicker #rangepicker></nb-rangepicker>
+                    <input nbInput placeholder="Ingrese la fecha de apertura" [nbDatepicker]="formpicker" [formControl]="formAsignarEncuesta.controls['fecha_apertura']">
+                    <nb-datepicker #formpicker></nb-datepicker>
                 </nb-card-body>
             </nb-card>
+            <nb-card>
+                <nb-card-header>Fecha de Cierre</nb-card-header>
+                <nb-card-body>
+                    <input nbInput placeholder="Ingrese la fecha de cierre" [nbDatepicker]="formpickers" [formControl]="formAsignarEncuesta.controls['fecha_cierre']">
+                    <nb-datepicker #formpickers></nb-datepicker>
+                </nb-card-body>
+            </nb-card>
+
+
+
 
         </form>
 

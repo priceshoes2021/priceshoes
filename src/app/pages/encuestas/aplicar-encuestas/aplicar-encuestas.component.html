@@ -1,37 +1,32 @@
-<div class="row">
+<div *ngIf="bMostarTabla" class="row">
     <div class="col-md-12 d-flex justify-content-center header-color-card card">
-
-
-        <h2 class="text-white text-center">Aplicar Encuestas PriceShoes</h2>
-
+        <h4 class="text-white text-center">Aplicar Encuestas PriceShoes</h4>
 
 
     </div>
+
     <div class="col-md-12">
         <nb-card>
-
-
             <nb-card-body>
                 <!--         <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
             </ng2-smart-table> -->
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Código</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Tienda</th>
                             <th scope="col">Responder</th>
-
                         </tr>
                     </thead>
-                    <tbody *ngFor="let item of encuestasAsignadas;let indice=index">
+                    <tbody *ngFor="let item of encuestasAsignadas; let indice = index">
                         <tr>
-                            <th scope="row">{{item.pk_aplicacionEncuesta}}</th>
-                            <td>{{item.encuesta}}</td>
-                            <td>{{item.tienda}}</td>
+                            <th scope="row">{{ item.pk_aplicacionEncuesta }}</th>
+                            <td>{{ item.encuesta }}</td>
+                            <td>{{ item.tienda }}</td>
 
-                            <td> <i class="mx-1 fa fa-check-circle icon pointer" nbTooltip="Responder Encuesta" (click)="abrirFormulario(item.pk_tipoEncuesta)" nbTooltipPlacement="top" nbTooltipStatus="warning"></i>
-
+                            <td>
+                                <i class="mx-1 fa fa-check-circle icon pointer" nbTooltip="Responder Encuesta" (click)="fn_MostrartEncuesta(item.pk_tipoEncuesta,item.tbl_tienda_pk_tienda, item.pk_aplicacionEncuesta)" nbTooltipPlacement="top" nbTooltipStatus="info"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -39,8 +34,36 @@
             </nb-card-body>
         </nb-card>
     </div>
+</div>
+<div *ngIf="!bMostarTabla">
+    <nb-card *ngFor="let item of mostrar_encuesta; let i = index">
+        <nb-card-header>
+            <div *ngIf="i == 0" class="d-flex justify-content-center header-color-card card">
+                <h2 class="text-white text-center">
+                    {{item.nombre_encuesta}}
+                </h2>
+                <i class="posicion-cerrar-encuesta icon-size fa fa-window-close text-white icon pointer" (click)="bMostarTabla=true"></i>
+            </div>
+        </nb-card-header>
+        <nb-card-body>
+            <div class="d-flex justify-content-center card">
+                <h6 class="texto-azul text-center">¿{{ item.pregunta }}</h6>
+            </div>
 
-
-
-
+            <div class="mt-3 d-flex h-100 align-items-center justify-content-center">
+                <button class="m-2" nbButton [status]="'success'" (click)="fn_preguntaRespuesta(item.pregunta, 'Bueno')">
+            <i class="mx-1 icon-size fa fa-grin-beam text-white icon pointer" ></i>Bueno
+          </button>
+                <button class="m-2" nbButton [status]="'warning'" (click)="fn_preguntaRespuesta(item.pregunta, 'Regular')">
+            <i class="mx-1 icon-size fa fa-meh text-white icon pointer" ></i>Regular
+          </button>
+                <button class="m-2" nbButton [status]="'danger'" (click)="fn_preguntaRespuesta(item.pregunta, 'Malo')">
+            <i class="mx-1 icon-size fa fa-angry text-white icon pointer"></i>Malo
+          </button>
+            </div>
+        </nb-card-body>
+        <button *ngIf="i == mostrar_encuesta.length-1" class="m-2 btn-azul" nbButton [status]="'primary'" (click)="fn_llenarEncuesta(item.pk_aplicacionEncuesta)">
+            <i class="mx-1 fa fa-save text-white icon pointer"></i>enviar
+          </button>
+    </nb-card>
 </div>

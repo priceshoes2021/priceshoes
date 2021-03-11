@@ -23,11 +23,6 @@
     .color_iconos {
         color: #e62a87 !important;
     }
-    .input-size {
-        width: 100%;
-        max-width: 15% !important;
-        margin-bottom: 1rem;
-    }
     ngx-chartjs-pie,
     ngx-chartjs-bar,
     ngx-chartjs-line,
@@ -39,13 +34,8 @@
         width: 100%;
          ::ng-deep chart {
             display: block;
-            height: 100% !important;
-            width: 100% !important;
+            height: 100%;
+            width: 100%;
         }
-    }
-    .fondo-header {
-        background-color: #33bdff !important;
-        color: #ffffff;
-        text-align: center;
     }
 }

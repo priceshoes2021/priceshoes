@@ -3,7 +3,7 @@
         <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
             <nb-icon icon="menu-2-outline"></nb-icon>
         </a>
-        <a class="logo" href="#" (click)="navigateHome()"><img style="width: 100%;" src="../../../../assets/priceshoes.jpg"></a>
+        <a class="logo" href="#" (click)="navigateHome()"><img style="width: 100%; border-radius: 30px;" src="../../../../assets/priceshoes.png"></a>
     </div>
     <nb-select class="posicion" [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
         <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>

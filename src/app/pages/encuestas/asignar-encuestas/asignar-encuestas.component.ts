@@ -96,6 +96,46 @@ encuestasAsignadas
   }
 
 
+  fn_eliminarEncuesta_Asignada(id, id_tienda) {
+    console.log(id)
+    Swal.fire({
+      title: '¿Seguro que quieres eliminar esta encuesta?',
+      text: "Si la eliminas no podrás recuperarla",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#e62a87',
+      showLoaderOnConfirm: true,
+      confirmButtonText: 'Si, Eliminar',
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ServicesProvider.preloaderOn();
+        console.log(id);
+  
+        let pk_aplicacionEncuesta = {
+          pk_tienda: id_tienda
+        };
+        this.ServicesProvider.post(SERVICES.ELIMINAR_ENCUESTA_ASIGNADA + id, pk_aplicacionEncuesta).then(response => {
+          console.log(response);
+          this.fn_listarEncuesta();
+          this.fn_listarEncuestasAsignadas();
+          Swal.fire(
+            {  icon: 'success',
+            title: 'Encuesta Eliminada con Éxito',
+            showConfirmButton: false,
+            timer: 1500}
+            
+          );
+          this.ServicesProvider.preloaderOff();
+        });
+  
+      }
+    });
+  
+  
+  
+  }
+
 
 
 }

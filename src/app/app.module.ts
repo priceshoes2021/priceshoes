@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { ServicesProvider } from '../app/config/services';
+
 import { HttpModule } from '@angular/http';
 import {
   NbChatModule,
