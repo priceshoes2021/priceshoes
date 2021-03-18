@@ -1,7 +1,7 @@
-/* export const URL =
-  "https://apipriceshoes.herokuapp.com/"; */
 export const URL =
-  "http://apiproceshoes-env.eba-r2enprv3.us-east-2.elasticbeanstalk.com/";
+  "https://apipriceshoes.herokuapp.com/";
+/* export const URL =
+  "http://apiproceshoes-env.eba-r2enprv3.us-east-2.elasticbeanstalk.com/"; */
 export const SERVICES = {
   LISTAR_TIENDAS: "tiendas",
   //Encuestas
