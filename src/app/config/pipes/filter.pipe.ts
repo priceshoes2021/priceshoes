@@ -12,7 +12,7 @@ export class FilterPipe implements PipeTransform{
         console.log(value, args)
         const resultPosts = [];
         for (const post of value) {
-            if (post.encuesta.toLowerCase().indexOf(args) > -1 ) {
+            if (post.CODIGO.toLowerCase().indexOf(args) > -1 ) {
                 resultPosts.push(post);
             }
             

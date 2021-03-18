@@ -7,6 +7,7 @@ import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { ComprasComponent } from './compras/compras.component';
 import { VisitantesComponent } from './visitantes/visitantes.component';
+import { VisitantesModule } from './visitantes/visitantes.module';
 
 
 const routes: Routes = [{
@@ -34,6 +35,11 @@ const routes: Routes = [{
       loadChildren: () => import('./layout/layout.module')
         .then(m => m.LayoutModule),
     },
+    {
+      path: 'visitantes',
+      loadChildren: () => import('./visitantes/visitantes.module')
+        .then(m => m.VisitantesModule),
+    }, 
      {
       path: 'encuestas',
       loadChildren: () => import('./encuestas/encuesta.module')

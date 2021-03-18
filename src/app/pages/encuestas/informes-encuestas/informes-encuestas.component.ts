@@ -32,15 +32,20 @@ export class InformesEncuestaComponent implements OnInit, OnDestroy {
   options: any;
   themeSubscription: any;
   filterPost = "";
-  aBarras=[];
+  aBarras = [];
   source: LocalDataSource = new LocalDataSource();
   encuestas = [];
-
-
-
-
-
-
+  encuestasAsignadas;
+  aEncuestas = [];
+  aPreguntas = [];
+  KPI=0;
+  body = {
+    encuesta: null,
+    tienda: null,
+    pregunta: null,
+    fecha_menor: null,
+    fecha_mayor: null,
+  };
 
   constructor(
     private service: SmartTableData,
@@ -50,11 +55,22 @@ export class InformesEncuestaComponent implements OnInit, OnDestroy {
   ) {
     /* const data = this.service.getData(); */
 
+
+    console.log(this.encuestas);
+  }
+
+  ngOnInit() {
+    this.fn_listarEncuestasSolucionadas('inicio');
+    this.fn_listarTienda();
+  }
+
+  fn_graficarBarras(){
+
     this.themeSubscription = this.theme.getJsTheme().subscribe((config) => {
       const colors: any = config.variables;
       const chartjs: any = config.variables.chartjs;
 
-      this.data = {
+      this.data = this.aBarras; /*  {
         labels: ["¿Cómo calificarías la tienda"],
         datasets: [
           {
@@ -73,7 +89,7 @@ export class InformesEncuestaComponent implements OnInit, OnDestroy {
             backgroundColor: ["#DA6D79"],
           },
         ],
-      };
+      }; */
 
       this.options = {
         maintainAspectRatio: false,
@@ -109,50 +125,46 @@ export class InformesEncuestaComponent implements OnInit, OnDestroy {
         },
       };
     });
-
-    console.log(this.encuestas);
   }
 
-  ngOnInit() {
-    this.fn_listarEncuestasSolucionadas();
-    this.fn_listarTienda();
-  }
-
- 
-
-
-  abrirFormulario() {
-    this.dialogService
-      .open(ModalEncuestaComponent)
-      .onClose.subscribe((name) => {});
-  }
-  encuestasAsignadas;
-  aListaEncuesta = [];
-  fn_listarEncuestasSolucionadas() {
+  fn_listarEncuestasSolucionadas(filtro, valor?) {
+    console.log(filtro, valor)
     let encuesta = [];
-    let body = {
-      encuesta: null,
-      tienda: null,
-      pregunta: null,
-      fecha_menor: null,
-      fecha_mayor: null,
-    };
+      switch (filtro) {
+      case "tienda":
+        this.body.tienda = valor;
+        break;
+      case "encuesta":
+        this.body.encuesta = valor;
+        break;
+      case "pregunta":
+        this.body.pregunta = valor;
+        break;
+      case "inicio":
+
+        break;
+      case "":
+        break;
+
+      default:
+        break;
+    }
     this.ServicesProvider.post(
       SERVICES.LISTAR_ENCUESTAS_SOLUCIONADA,
-      body
+      this.body
     ).then((response) => {
+      
       encuesta = response.encuestas;
-      this.aBarras = response.barras
-      console.log(this.aBarras)
-      this.fn_arrayFiltroEncuesta(encuesta);
-      /*       this.aListaEncuesta.map((encuesta) => [
-        { encuesta: encuesta.encuesta, id: encuesta.id },
-      ]); */
+      this.aBarras = response.barras;
+      console.log(this.aBarras);
+      this.aEncuestas = response.encuestas_filtro;
+      this.aPreguntas = response.preguntas;
+      this.KPI=response.kpi
       this.encuestasAsignadas = _.chain(encuesta)
         .groupBy("encuesta")
         .map((encuesta, datos) => ({ encuesta, datos }))
         .value();
-
+        this.fn_graficarBarras();
       console.log(response, this.encuestasAsignadas);
     });
   }
@@ -167,8 +179,8 @@ export class InformesEncuestaComponent implements OnInit, OnDestroy {
       console.log(response);
     });
   }
-  aPregunta;
-  fn_arrayFiltroEncuesta(aEncuesta) {
+
+/*   fn_arrayFiltroEncuesta(aEncuesta) {
     var encuestas = {};
     var unicos = aEncuesta.filter(function (e) {
       return aEncuesta[e.pk_encuesta]
@@ -177,5 +189,5 @@ export class InformesEncuestaComponent implements OnInit, OnDestroy {
     });
     this.aListaEncuesta = unicos;
     console.log(unicos, this.aListaEncuesta);
-  }
+  } */
 }

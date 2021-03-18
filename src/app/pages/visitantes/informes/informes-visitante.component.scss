@@ -1,0 +1,51 @@
+@import '../../../@theme/styles/themes';
+@include nb-install-component() {
+    input {
+        width: 100%;
+        max-width: 80% !important;
+        margin-bottom: 1rem;
+    }
+    .cancel {
+        margin-right: 1rem;
+    }
+    .card-tamano {
+        overflow-y: auto;
+        max-height: 100%;
+    }
+    .action-icon {
+        @include nb-ltr(margin-right, 0.5rem);
+        @include nb-rtl(margin-left, 0.5rem);
+    }
+    .header-color-card {
+        color: #ffffff !important;
+        background: #e62a87 !important;
+    }
+    .color_iconos {
+        color: #e62a87 !important;
+    }
+    .input-size {
+        width: 100%;
+        max-width: 15% !important;
+        margin-bottom: 1rem;
+    }
+    ngx-chartjs-pie,
+    ngx-chartjs-bar,
+    ngx-chartjs-line,
+    ngx-chartjs-multiple-xaxis,
+    ngx-chartjs-bar-horizontal,
+    ngx-chartjs-radar {
+        display: block;
+        height: nb-theme(card-height-medium);
+        width: 100%;
+         ::ng-deep chart {
+            display: block;
+            height: 100% !important;
+            width: 100% !important;
+        }
+    }
+    .fondo-header {
+        background-color: #33bdff !important;
+        color: #ffffff;
+        text-align: center;
+    }
+}

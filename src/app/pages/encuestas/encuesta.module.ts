@@ -30,8 +30,6 @@ import { AplicarEncuestaComponent } from "./aplicar-encuestas/aplicar-encuestas.
 import { InformesEncuestaComponent } from "./informes-encuestas/informes-encuestas.component";
 import { GestionarEncuestaComponent } from "./gestionar-encuestas/gestionar-encuestas.component";
 import { EncuestasRoutingModule } from "./encuestas-routing.module";
-
-import { FilterPipe } from '../../config/pipes/filter.pipe';
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 
 @NgModule({
@@ -67,7 +65,7 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
     GestionarEncuestaComponent,
     AsignarEncuestaComponent,
     AplicarEncuestaComponent,
-    FilterPipe,
+    
     InformesEncuestaComponent,
     
     

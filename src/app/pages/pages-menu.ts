@@ -38,11 +38,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Visitante',
-        link: '/pages/layout/stepper',
+        link: '/pages/visitantes/informe-visitante',
       },
       {
         title: 'Informes',
-        link: '/pages/layout/list',
+        link: '/pages/visitantes/informe-visitante',
       }
     ],
   },
@@ -171,8 +171,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'CRM',
     icon: 'home-outline',
     link: '/pages/iot-dashboard',
-  },
-/*   {
+  },/* 
+   {
     title: 'FEATURES',
     group: true,
   },
@@ -403,5 +403,5 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/auth/reset-password',
       },
     ],
-  }, */
+  },  */
 ];

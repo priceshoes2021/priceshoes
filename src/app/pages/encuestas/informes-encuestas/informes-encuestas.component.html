@@ -40,20 +40,20 @@
             <nb-card-body class="d-flex justify-content-around">
                 <nb-select class="w-100" selected="0">
                     <nb-option value="0">Tienda</nb-option>
-                    <nb-option *ngFor="let tienda of aTiendas" value="{{tienda.pk_tienda}}">{{tienda.nombre}}</nb-option>
+                    <nb-option *ngFor="let tienda of aTiendas" (click)="fn_listarEncuestasSolucionadas('tienda',tienda.pk_tienda)" value="{{tienda.pk_tienda}}">{{tienda.nombre}}</nb-option>
                 </nb-select>
                 <nb-select class="w-100" selected="0">
                     <nb-option value="0">Encuesta</nb-option>
-                    <nb-option *ngFor="let item of aListaEncuesta" value="{{item.pk_encuesta}}">{{item.encuesta}}</nb-option>
+                    <nb-option *ngFor="let item of aEncuestas" (click)="fn_listarEncuestasSolucionadas('encuesta',item.pk_encuesta)" value="{{item.pk_encuesta}}">{{item.encuesta}}</nb-option>
                 </nb-select>
-                <nb-select selected="1">
-                    <nb-option value="1">Preguntas</nb-option>
-                    <nb-option value="2">Option 2</nb-option>
+                <nb-select class="w-100" selected="0">
+                    <nb-option value="0">Preguntas</nb-option>
+                    <nb-option *ngFor="let item of aPreguntas" (click)="fn_listarEncuestasSolucionadas('pregunta',item)" value="{{item}}">{{item}}</nb-option>
                 </nb-select>
-                <nb-select selected="1">
+                <!--                 <nb-select selected="1">
                     <nb-option value="1">Fecha</nb-option>
                     <nb-option value="2">Option 2</nb-option>
-                </nb-select>
+                </nb-select> -->
             </nb-card-body>
         </nb-card>
     </div>
@@ -63,11 +63,11 @@
             <nb-card-header class="fondo-header">Número de Aplicaciones por Encuesta </nb-card-header>
 
             <nb-card-body>
-                <h1 class="text-center">45</h1>
+                <h1 class="text-center">{{KPI}}</h1>
             </nb-card-body>
         </nb-card>
     </div>
-    <div *ngIf="aBarras != {}" class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    <div *ngIf="aBarras" class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
         <nb-card>
             <nb-card-header class="fondo-header">Respuestas por Pregunta </nb-card-header>
 
@@ -81,9 +81,9 @@
             <nb-card-header class="fondo-header">Aplicación por Encuesta</nb-card-header>
 
             <nb-card-body>
-                <div>
+                <!--                 <div>
                     <input class="input-size" type="text" [(ngModel)]="filterPost" name="filterPost" nbInput fullWidth shape="round" placeholder="Buscar" />
-                </div>
+                </div> -->
 
                 <table class="table table-striped table-hover">
                     <thead>

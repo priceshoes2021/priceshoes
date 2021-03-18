@@ -77,7 +77,7 @@ export class AplicarEncuestaComponent implements OnInit {
       }
     );
   }
-
+  aRespuestas=[]
   fn_preguntaRespuesta(pregunta, respuesta) {
     console.log(pregunta, respuesta);
     let preguntaRepetida=false
@@ -104,17 +104,17 @@ export class AplicarEncuestaComponent implements OnInit {
         respuesta: respuesta,
       });
     }
-
-    console.log(this.aPregunta);
+    this.aRespuestas.push(this.aPregunta[0])
+    console.log(this.aPregunta, this.aRespuestas);
   }
 
   fn_llenarEncuesta(id_encuesta) {
-    console.log();
+    console.log(id_encuesta);
 
     let encuesta_responder = {
       pk_aplicacionEncuesta: this.id_encuesta,
       pk_tienda: this.id_tienda,
-      solucion: this.aPregunta,
+      solucion: this.aRespuestas,
     };
     console.log(encuesta_responder);
          this.ServicesProvider.post(SERVICES.LLENAR_ENCUESTA, encuesta_responder).then((response) => {

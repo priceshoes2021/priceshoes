@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { Ng2SmartTableModule } from "ng2-smart-table";
 import {
   NbAccordionModule,
   NbButtonModule,
@@ -10,20 +10,21 @@ import {
   NbListModule,
   NbRouteTabsetModule,
   NbStepperModule,
-  NbTabsetModule, NbUserModule,
+  NbTabsetModule,
+  NbUserModule,
   NbTooltipModule,
-} from '@nebular/theme';
-
-import { RotacionComponent } from './rotacion/rotacion.component';
-import { InventarioRoutingModule } from './inventario-routing.module';
-import { InventarioComponent } from './inventario.component';
-
-
+} from "@nebular/theme";
+import { ThemeModule } from "../../@theme/theme.module";
+import {
+  RotacionComponent,
+  FsIconComponent,
+} from "./rotacion/rotacion.component";
+import { InventarioRoutingModule } from "./inventario-routing.module";
+import { InventarioComponent } from "./inventario.component";
+import { NbIconModule, NbInputModule, NbTreeGridModule } from "@nebular/theme";
+import { FilterPipe } from '../../config/pipes/filter.pipe';
 
 @NgModule({
-
-
-
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -39,17 +40,19 @@ import { InventarioComponent } from './inventario.component';
     Ng2SmartTableModule,
     CommonModule,
     NbTooltipModule,
-    
-  
-
+    ThemeModule,
+    NbIconModule,
+    NbInputModule,
+    NbTreeGridModule,
   ],
 
   declarations: [
     /* RotacionComponent */
     InventarioComponent,
-    RotacionComponent
+    RotacionComponent,
+    FsIconComponent,
+    FilterPipe
   ],
-  providers: [
-  ],
+  providers: [],
 })
-export class InventarioModule { }
+export class InventarioModule {}

@@ -5,6 +5,8 @@ import { NbButtonModule, NbCardModule, NbTabsetModule,NbUserModule } from '@nebu
 import { ThemeModule } from '../../@theme/theme.module';
 
 import { VisitantesComponent } from './visitantes.component';
+import { InformesVisitanteComponent } from './informes/informes-visitante.component';
+import { VisitanteRoutingModule } from './visitantes-routing.modules';
 
 
 @NgModule({
@@ -14,10 +16,11 @@ import { VisitantesComponent } from './visitantes.component';
     NbButtonModule,
     NbTabsetModule,
     NbUserModule,
-
+    VisitanteRoutingModule
   ],
   declarations: [
     VisitantesComponent,
+    InformesVisitanteComponent
 
   ],
 })

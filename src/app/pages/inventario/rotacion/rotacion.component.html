@@ -1,25 +1,168 @@
 <div class="row d-flex justify-content-center">
-    <div class="col-md-12 mb-4 d-flex justify-content-center header-color-card card">
-
-
-        <h4 class="text-white text-center">Rotación de Inventarios PriceShoes</h4>
-
-
-
-    </div>
-
+  <div class="col-md-12 mb-4 header-color-card card">
+    <h4 class="text-white text-center">Rotación de Inventarios PriceShoes</h4>
+  </div>
+  <div class="col-md-12 col-lg-12">
     <nb-card>
-        <nb-card-header>
-            <i class="mx-1 fa fa-warehouse icon pointer"></i> Inventario
-        </nb-card-header>
+      <nb-tabset>
+        <nb-tab tabTitle="Rotaciones">
+<!--           <nb-card>
+            <nb-card-header>
+              <i class="mx-1 fa fa-warehouse icon pointer"></i> Inventario
+            </nb-card-header>
 
-        <nb-card-body>
-            <ng2-smart-table class="fondo" [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
-            </ng2-smart-table>
-        </nb-card-body>
+            <nb-card-body>
+              <ng2-smart-table
+                class="fondo"
+                [settings]="settings"
+                [source]="source"
+              >
+              </ng2-smart-table>
+            </nb-card-body>
+          </nb-card> -->
+          <div class="col-lg-12" style="overflow-y: auto;max-height: 580px;">
+            <nb-card>
+              <nb-card-body>
+                <label class="search-label" for="search">Buscar:</label>
+                <input
+                  nbInput
+                  [nbFilterInput]="dataSource"
+                  id="search"
+                  class="search-input"
+                />
+        
+                <table
+                  [nbTreeGrid]="dataSource"
+                  [nbSort]="dataSource"
+                  (sort)="updateSort($event)"
+                >
+                  <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+                  <tr
+                    [ngClass]="{
+                      'amarillo': (row.data.ROT >= 90) && (row.data.ROT <= 250),
+                      'rojo': (row.data.ROT == 0) || (row.data.ROT > 250),
+                      'blanco': row.data.ROT < 0,
+                      'azul': (row.data.ROT < 90) && (row.data.ROT > 0)
+                    }"
+                    nbTreeGridRow
+                    *nbTreeGridRowDef="let row; columns: allColumns"
+                  ></tr>
+        
+                  <ng-container [nbTreeGridColumnDef]="customColumn">
+                    <th
+                      style="width: 200px"
+                      nbTreeGridHeaderCell
+                      [nbSortHeader]="getSortDirection(customColumn)"
+                      *nbTreeGridHeaderCellDef
+                    >
+                      {{ customColumn }}
+                    </th>
+                    <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                      <ngx-fs-icon
+                        [kind]="row.data.CABECERA"
+                        [expanded]="row.expanded"
+                      ></ngx-fs-icon>
+                      {{ row.data[customColumn] }}
+                    </td>
+                  </ng-container>
+        
+                  <ng-container
+                    *ngFor="let column of defaultColumns; let index = index"
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="getShowOn(index)"
+                  >
+                    <th
+                      nbTreeGridHeaderCell
+                      [nbSortHeader]="getSortDirection(column)"
+                      *nbTreeGridHeaderCellDef
+                    >
+                      {{ column }}
+                    </th>
+                    <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                      {{ row.data[column] || "0" }}
+                    </td>
+                  </ng-container>
+                </table>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </nb-tab>
+        <nb-tab tabTitle="Gestionar Corner">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"  style="overflow-y: auto;max-height: 580px;">
+            <nb-card>
+              <nb-card-header class="fondo-header"
+                >Aplicación por Encuesta</nb-card-header
+              >
+
+              <nb-card-body>
+                <div>
+                  <input
+                    class="input-size"
+                    type="text"
+                    [(ngModel)]="filterPost"
+                    name="filterPost"
+                    nbInput
+                    fullWidth
+                    shape="round"
+                    placeholder="Buscar"
+                  />
+                </div>
+
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <!--<th scope="col">Id</th> -->
+                      <th scope="col">Código</th>
+                      <th scope="col">Descuento (%)</th>
+                      <th scope="col">Gestionar</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let item of aCorner">
+                    <tr>
+                      <!--      <td scope="row">{{ item.datos }}</td> -->
+                      <td>{{ item.CODIGO }}</td>
+                      <td>{{ item.DESCUENTO }}</td>
+                      <td>
+                        <i
+                          class="mx-1 fa fa-pencil-alt icon pointer"
+                          nbTooltip="Editar Corner"
+                          (click)="
+                            fn_MostrartEncuesta(
+                              item.pk_tipoEncuesta,
+                              item.tbl_tienda_pk_tienda,
+                              item.pk_aplicacionEncuesta
+                            )
+                          "
+                          nbTooltipPlacement="top"
+                          nbTooltipStatus="info"
+                        ></i>
+                        <i
+                          class="mx-1 fa fa-trash-alt icon pointer"
+                          nbTooltip="Eliminar Corner"
+                          (click)="
+                            fn_MostrartEncuesta(
+                              item.pk_tipoEncuesta,
+                              item.tbl_tienda_pk_tienda,
+                              item.pk_aplicacionEncuesta
+                            )
+                          "
+                          nbTooltipPlacement="top"
+                          nbTooltipStatus="info"
+                        ></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </nb-tab>
+      </nb-tabset>
     </nb-card>
+  </div>
 
+  <!-- 
     <iframe class="w-100" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=38ad9f51-1d4a-43d7-beb3-f12113e7590e&autoAuth=true&ctid=4f1e044d-3d70-4990-b26a-b95f0c642e1a&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWNlbnRyYWwtdXMtcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D"
-        frameborder="0" allowFullScreen="true"></iframe>
+        frameborder="0" allowFullScreen="true"></iframe> -->
 
 </div>

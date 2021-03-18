@@ -45,7 +45,7 @@ export class GestionarEncuestaComponent implements OnInit {
 
   abrirFormulario() {
     this.dialogService.open(DialogNamePromptComponent)
-      .onClose.subscribe(name =>  this.fn_agregarEncuesta());
+      .onClose.subscribe(name =>  this.fn_agregarEncuesta(name));
 
   }
 
@@ -78,29 +78,8 @@ export class GestionarEncuestaComponent implements OnInit {
 
   }
   oEncuesta:{}
-  fn_agregarEncuesta(){
-    this.oEncuesta={
-      "nombre":"Encuesta de otra prueba",
-      "descripcion":"",
-      "preguntas":[
-         {
-            "nombre":"Como describiría la atencion?",
-            "respuestas":[
-               "Buena",
-               "Regular",
-               "Mala"
-            ]
-         },
-         {
-            "nombre":"Como describiría la tienda?",
-            "respuestas":[
-               "Buena",
-               "Regular",
-               "Mala"
-            ]
-         }
-      ] 
-    }
+  fn_agregarEncuesta(encuesta:any){
+    this.oEncuesta=encuesta;
     this.ServicesProvider.post(SERVICES.AGREGAR_ENCUESTAS, this.oEncuesta).then(response => {
       console.log(response)
       this.fn_listarEncuesta()
@@ -130,16 +109,26 @@ export class GestionarEncuestaComponent implements OnInit {
           pk_tipoEncuesta: id
         };
         this.ServicesProvider.post(SERVICES.ELIMINAR_ENCUESTA + id).then(response => {
-          console.log(response);
-          this.fn_listarEncuesta();
-          Swal.fire(
-            {  icon: 'success',
-            title: 'Encuesta Eliminada con Éxito',
-            showConfirmButton: false,
-            timer: 1500}
-            
-          );
-          this.ServicesProvider.preloaderOff();
+          if (response.status=="Error encuesta asignada") {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'La encuesta no puede ser eliminada por que ha sido asignada a una tienda!',
+              confirmButtonColor: '#e62a87',
+              timer:1500
+            })
+          }else{
+            console.log(response);
+            this.fn_listarEncuesta();
+            Swal.fire(
+              {  icon: 'success',
+              title: 'Encuesta Eliminada con Éxito',
+              showConfirmButton: false,
+              timer: 1500}
+              
+            );
+          }
+
         });
 
       }
