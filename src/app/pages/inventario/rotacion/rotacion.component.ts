@@ -330,7 +330,7 @@ export class RotacionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fn_listarRotaciones();
+  /*   this.fn_listarRotaciones(); */
     this.fn_listarCorner();
  
 

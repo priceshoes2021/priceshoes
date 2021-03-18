@@ -36,7 +36,7 @@
                   [nbSort]="dataSource"
                   (sort)="updateSort($event)"
                 >
-                  <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+                  <tr style="color: #33bdff !important;" nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
                   <tr
                     [ngClass]="{
                       'amarillo': (row.data.ROT >= 90) && (row.data.ROT <= 250),
