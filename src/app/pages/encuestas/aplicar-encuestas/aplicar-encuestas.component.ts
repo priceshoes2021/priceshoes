@@ -79,6 +79,7 @@ export class AplicarEncuestaComponent implements OnInit {
   }
   aRespuestas=[]
   fn_preguntaRespuesta(pregunta, respuesta) {
+    
     console.log(pregunta, respuesta);
     let preguntaRepetida=false
     this.aPregunta = [];
@@ -119,7 +120,7 @@ export class AplicarEncuestaComponent implements OnInit {
     console.log(encuesta_responder);
          this.ServicesProvider.post(SERVICES.LLENAR_ENCUESTA, encuesta_responder).then((response) => {
       console.log(response);
-
+          this.aRespuestas = [];
       Swal.fire({
         position: "center",
         icon: "success",
