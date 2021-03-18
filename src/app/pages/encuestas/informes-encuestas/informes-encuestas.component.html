@@ -39,15 +39,15 @@
         <nb-card>
             <nb-card-body class="d-flex justify-content-around">
                 <nb-select class="w-100" selected="0">
-                    <nb-option value="0">Tienda</nb-option>
+                    <nb-option value="0" (click)="fn_listarEncuestasSolucionadas('tienda', null)">Tienda</nb-option>
                     <nb-option *ngFor="let tienda of aTiendas" (click)="fn_listarEncuestasSolucionadas('tienda',tienda.pk_tienda)" value="{{tienda.pk_tienda}}">{{tienda.nombre}}</nb-option>
                 </nb-select>
                 <nb-select class="w-100" selected="0">
-                    <nb-option value="0">Encuesta</nb-option>
+                    <nb-option value="0" (click)="fn_listarEncuestasSolucionadas('encuesta', null)">Encuesta</nb-option>
                     <nb-option *ngFor="let item of aEncuestas" (click)="fn_listarEncuestasSolucionadas('encuesta',item.pk_encuesta)" value="{{item.pk_encuesta}}">{{item.encuesta}}</nb-option>
                 </nb-select>
                 <nb-select class="w-100" selected="0">
-                    <nb-option value="0">Preguntas</nb-option>
+                    <nb-option value="0" (click)="fn_listarEncuestasSolucionadas('pregunta', null)">Preguntas</nb-option>
                     <nb-option *ngFor="let item of aPreguntas" (click)="fn_listarEncuestasSolucionadas('pregunta',item)" value="{{item}}">{{item}}</nb-option>
                 </nb-select>
                 <!--                 <nb-select selected="1">
