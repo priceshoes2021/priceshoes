@@ -1,90 +1,132 @@
-<nb-card class="card-tamano">
+<nb-card class="card-tamano" style="width: 700px">
   <nb-card-header class="header-color-card">
     <i class="mx-1 fa fa-plus-circle icon pointer"></i>Agregar Encuesta
   </nb-card-header>
-
   <nb-card-body>
     <form [formGroup]="formEncuesta">
-      <input
-        nbInput
-        placeholder="Nombre de la Encuesta"
-        type="text"
-        formControlName="nombre_encuesta"
-      />
-      <input
-        nbInput
-        placeholder="Descripcion"
-        formControlName="descripcion_encuesta"
-      />
+      <div>
+        <input nbInput placeholder="Nombre de la Encuesta" formControlName="enc_nombre" type="text" />
+      </div>
+      <div>
+        <input nbInput placeholder="Descripcion" formControlName="enc_descripcion" />
+      </div>
+      <div formArrayName="enc_pregunta">
+        <div *ngFor="let pregunta of enc_pregunta.controls; let i = index">
+          <nb-card>
+            <nb-card-header class="header-color"
+              >Pregunta {{ i + 1 }}
+              <i
+                class="color_icono_pregunta mx-1 fa fa-trash icon"
+                nbTooltip="Eliminar Pregunta"
+                nbTooltipPlacement="top"
+                nbTooltipStatus="danger"
+                (click)="borrarPregunta(i)"
+              ></i
+            ></nb-card-header>
+            <nb-card-body>
+              <div [formGroupName]="i">
+                <div class="form-group row">
+                  <div class="col-md-11">
+                    <!--   <input type="text" [attr.id]="'item' + i" class="form-control" formControlName="nombre_pregunta"> -->
+                    <input
+                      nbInput
+                      placeholder="Pregunta"
+                      class="form-control"
+                      formControlName="nombrePregunta"
+                    />
+                  </div>
+<!--                   <div  class="pointer" title="Cargar imágen" placement="left" (click)="fn_callFile()" >
+                    <input type="file" id="inputfile"  (change)="fileChange($event)"  class="d-none"     formControlName="eve_imagen" accept="image/*" >
+                    <span *ngIf="!preview">
+                      <p class="card-text m-0 p-0 text-center mt-2">Cargar imágen</p>
+                      <div class="d-flex flex-center">
+                            <i class="fas fa-upload text-gray fa-6x"></i>
+                      </div>        
+                    </span>
+                    <span *ngIf="preview">
+                      <p class="image_preview">
+                          <img  [src]="preview" class="w-75" style="max-height: 200px;">
+                      </p>
+                    </span>
+  
+                </div> -->
+                <input type="file" accept="image/*" (change)="showPreview($event)" />
 
-      <ng-container
-        formArrayName="pregunta_encuesta"
-        *ngFor="let pregunta of pregunta_encuesta.controls; let i = index"
-      >
-        <nb-card>
-          <nb-card-header>Pregunta {{ i }}</nb-card-header>
-          <nb-card-body>
-            <div [formGroupName]="i">
-              <div class="form-group row">
-                <div class="col-md-11">
-                  <!--   <input type="text" [attr.id]="'item' + i" class="form-control" formControlName="nombre_pregunta"> -->
-                  <input
-                    nbInput
-                    placeholder="Pregunta"
-                    class="form-control"
-                    formControlName="nombre_pregunta"
-                  />
+                <!-- Image Preview -->
+<!--                 <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                  <img [src]="imageURL" [alt]="formPregunta.value.name">
+                </div> -->
                 </div>
-                <div class="col-md-1">
-                  <i
-                    class="color_iconos mx-1 fa fa-trash icon"
-                    nbTooltip="Eliminar Encuesta"
-                    nbTooltipPlacement="top"
-                    nbTooltipStatus="danger"
-                    (click)="fn_eliminarPregunta(i)"
-                  ></i>
+                <!--                 <div>
+                  <input nbInput placeholder="Respuesta" class="form-control" />
+                  <ul *ngFor="let item of aRespuestas">
+                    <li>{{ item }}</li>
+                  </ul>
+                </div> -->
+                <div formArrayName="enc_respuesta">
+                  <div
+                    *ngFor="
+                      let respuesta of enc_pregunta.controls[i]['controls']
+                        .enc_respuesta.controls;
+                      let j = index
+                    "
+                  >
+                    <div class="form-group row">
+                      <div [formGroupName]="j" class="col-md-11">
+                        <div>
+                          <input
+                            nbInput
+                            placeholder="Respuesta"
+                            class="form-control"
+                            formControlName="nombreRespuesta"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-1">
+                        <i
+                          class="color_icono_respuesta mx-1 fa fa-trash icon"
+                          nbTooltip="Eliminar Respuesta"
+                          nbTooltipPlacement="top"
+                          nbTooltipStatus="danger"
+                          (click)="borrarRespuesta(j)"
+                        ></i>
+                      </div>
+                    </div>
+
+                    <hr />
+                  </div>
                 </div>
               </div>
-              <div>
-                <input
-                  nbInput
-                  placeholder="Respuesta"
-                  class="form-control"
-                  formControlName="respuesta_encuesta"
-                />
-                <ul *ngFor="let item of aRespuestas">
-                  <li>{{item}} </li>
-                </ul>
+
+              <div class="">
+                <button
+                  type="submit"
+                  nbButton
+                  (click)="agregar_respuesta()"
+                  [status]="'success'"
+                  [size]="'small'"
+                  ghost
+                >
+                  Respuestas +
+                </button>
               </div>
-            </div>
+            </nb-card-body>
+            <nb-card-footer> </nb-card-footer>
+          </nb-card>
 
-            <div class="">
-              <button
-                type="submit"
-                nbButton
-                (click)="fn_agregarRespuesta(i)"
-                [status]="'success'"
-                [size]="'small'"
-                ghost
-              >
-                Respuestas +
-              </button>
-            </div>
-          </nb-card-body>
-          <nb-card-footer> </nb-card-footer>
-        </nb-card>
-      </ng-container>
-
-      <button
-        class="mb-2"
-        nbButton
-        (click)="fn_agregarPregunta()"
-        [status]="'info'"
-        outline
-      >
-        Añadir preguntas
-      </button>
+          <hr />
+        </div>
+      </div>
     </form>
+    <button
+      class="mb-2"
+      nbButton
+      (click)="agregar_pregunta()"
+      [status]="'info'"
+      outline
+    >
+      Añadir preguntas
+    </button>
   </nb-card-body>
   <nb-card-footer>
     <button class="cancel" nbButton status="danger" (click)="cancel()">
@@ -100,13 +142,3 @@
     </button>
   </nb-card-footer>
 </nb-card>
-
-<!-- 
-<button class="mb-2" nbButton (click)="insertarPretgunta()" [status]="'info'" outline>
-    +
-</button>
-<input #pregunta nbInput placeholder="Pregunta">
-
-<input *ngIf="respuesta" #respuesta nbInput placeholder="Respuesta 1">
-        <input #respuesta2 nbInput placeholder="Respuesta 2">
-<input #respuesta3 nbInput placeholder="Respuesta 3"> -->

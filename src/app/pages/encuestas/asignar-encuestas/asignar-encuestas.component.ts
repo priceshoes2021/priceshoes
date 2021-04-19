@@ -8,6 +8,7 @@ import { ShowcaseDialogComponent } from '../../modal-overlays/dialog/showcase-di
 import { NbDialogService } from '@nebular/theme';
 import { SERVICES } from "../../../config/webservices";
 import { ServicesProvider } from "../../../config/services";
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 @Component({
   selector: 'ngx-accordion',
   templateUrl: 'asignar-encuestas.component.html',
@@ -16,18 +17,23 @@ import { ServicesProvider } from "../../../config/services";
 export class AsignarEncuestaComponent implements OnInit {
 
 
-  
+  user=""
   names: string[] = [];
   source: LocalDataSource = new LocalDataSource();
   data = [];
   encuestas =[]
-  constructor(private service: SmartTableData, private dialogService: NbDialogService, private ServicesProvider: ServicesProvider) {
-    /* const data = this.service.getData(); */
+  constructor(private service: SmartTableData, private dialogService: NbDialogService, private ServicesProvider: ServicesProvider,private authService: NbAuthService) {
 
+    this.authService.onTokenChange()
+      .subscribe((token: NbAuthJWTToken) => {
+        console.log(token)
+        if (token.isValid()) {
+          this.user = token['token']; // here we receive a payload from the token and assigns it to our `user` variable 
+        }
 
-    console.log(this.encuestas)
+      });
+      console.log(this.user)
   }
-
   ngOnInit(){
     this.fn_listarEncuesta();
     this.fn_listarEncuestasAsignadas();
@@ -61,7 +67,7 @@ export class AsignarEncuestaComponent implements OnInit {
       fechaApertura: fechaApertura,
       fechaCierre: fechaCierre
 }
-    this.ServicesProvider.post(SERVICES.ASIGNAR_ENCUESTA , encuesta_asignada).then(response => {
+    this.ServicesProvider.post(SERVICES.ASIGNAR_ENCUESTA , encuesta_asignada, false, this.user ).then(response => {
       if (response.status = "encuesta asignada") {
         Swal.fire({
           position: 'center',
@@ -115,7 +121,7 @@ encuestasAsignadas
         let pk_aplicacionEncuesta = {
           pk_tienda: id_tienda
         };
-        this.ServicesProvider.post(SERVICES.ELIMINAR_ENCUESTA_ASIGNADA + id, pk_aplicacionEncuesta).then(response => {
+        this.ServicesProvider.post(SERVICES.ELIMINAR_ENCUESTA_ASIGNADA + id, pk_aplicacionEncuesta, false, this.user).then(response => {
           console.log(response);
           this.fn_listarEncuesta();
           this.fn_listarEncuestasAsignadas();

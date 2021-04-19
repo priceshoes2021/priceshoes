@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ServicesProvider } from '../app/config/services';
 
 import { HttpModule } from '@angular/http';
+import { AuthGuard } from '../app/auth/auth-guard/auth-guard.service';
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -48,6 +49,7 @@ import {
   ],
   providers: [
     ServicesProvider,
+ /*    AuthGuard */
   ],
   bootstrap: [AppComponent],
 })

@@ -7,7 +7,7 @@ import { ShowcaseDialogComponent } from '../../modal-overlays/dialog/showcase-di
 import { NbDialogService } from '@nebular/theme';
 import { SERVICES } from "../../../config/webservices";
 import { ServicesProvider } from "../../../config/services";
-
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'ngx-accordion',
@@ -16,20 +16,24 @@ import Swal from 'sweetalert2';
 })
 export class GestionarEncuestaComponent implements OnInit {
   encuestas = []
+  user = "";
 
+  constructor(private service: SmartTableData, private dialogService: NbDialogService, private ServicesProvider: ServicesProvider,private authService: NbAuthService) {
 
-  constructor(private service: SmartTableData, private dialogService: NbDialogService, private ServicesProvider: ServicesProvider,) {
-    /* const data = this.service.getData(); */
-/*     this.encuestas = [
-      { id: "123", nombre_encuesta: "Encuesta de Satisfacción de Clientes", fecha_encuesta: "19/02/2021" },
-      { id: "124", nombre_encuesta: "Encuesta de Motivo de no compra", fecha_encuesta: "21/02/2021", },
+    this.authService.onTokenChange()
+      .subscribe((token: NbAuthJWTToken) => {
+        console.log(token)
+        if (token.isValid()) {
+          this.user = token['token']; // here we receive a payload from the token and assigns it to our `user` variable 
+        }
 
-
-    ] */
-
+      });
+      console.log(this.user)
   }
   ngOnInit() {
     this.fn_listarEncuesta()
+    console.log(localStorage.key)
+    
   }
 
   onDeleteConfirm(event): void {
@@ -79,8 +83,11 @@ export class GestionarEncuestaComponent implements OnInit {
   }
   oEncuesta:{}
   fn_agregarEncuesta(encuesta:any){
+/*     if (ence) {
+      
+    } */
     this.oEncuesta=encuesta;
-    this.ServicesProvider.post(SERVICES.AGREGAR_ENCUESTAS, this.oEncuesta).then(response => {
+    this.ServicesProvider.post(SERVICES.AGREGAR_ENCUESTAS, this.oEncuesta,  false, this.user).then(response => {
       console.log(response)
       this.fn_listarEncuesta()
       this.ServicesProvider.fn_generarAlerta("exito", "Guardado con éxito")
@@ -108,7 +115,7 @@ export class GestionarEncuestaComponent implements OnInit {
         let pk_tipoEncuesta = {
           pk_tipoEncuesta: id
         };
-        this.ServicesProvider.post(SERVICES.ELIMINAR_ENCUESTA + id).then(response => {
+        this.ServicesProvider.post(SERVICES.ELIMINAR_ENCUESTA + id, {}, false, this.user).then(response => {
           if (response.status=="Error encuesta asignada") {
             Swal.fire({
               icon: 'error',

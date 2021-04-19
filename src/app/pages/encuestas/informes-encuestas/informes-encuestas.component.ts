@@ -20,6 +20,7 @@ import { ServicesProvider } from "../../../config/services";
 import { NbThemeService, NbColorHelper } from "@nebular/theme";
 import Swal from "sweetalert2";
 import "lodash";
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 declare var _: any;
 @Component({
   selector: "informes",
@@ -46,18 +47,25 @@ export class InformesEncuestaComponent implements OnInit, OnDestroy {
     fecha_menor: null,
     fecha_mayor: null,
   };
-
+  user=""
   constructor(
     private service: SmartTableData,
     private dialogService: NbDialogService,
     private ServicesProvider: ServicesProvider,
-    private theme: NbThemeService
-  ) {
-    /* const data = this.service.getData(); */
+    private theme: NbThemeService,
+    private authService: NbAuthService) {
 
+      this.authService.onTokenChange()
+        .subscribe((token: NbAuthJWTToken) => {
+          console.log(token)
+          if (token.isValid()) {
+            this.user = token['token']; // here we receive a payload from the token and assigns it to our `user` variable 
+          }
+  
+        });
+        console.log(this.user)
+    }
 
-    console.log(this.encuestas);
-  }
 
   ngOnInit() {
     this.fn_listarEncuestasSolucionadas('inicio');
@@ -151,7 +159,7 @@ export class InformesEncuestaComponent implements OnInit, OnDestroy {
     }
     this.ServicesProvider.post(
       SERVICES.LISTAR_ENCUESTAS_SOLUCIONADA,
-      this.body
+      this.body,  false, this.user 
     ).then((response) => {
       
       encuesta = response.encuestas;

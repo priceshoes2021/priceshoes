@@ -14,6 +14,7 @@ import { ServicesProvider } from "../../../config/services";
 import Swal from "sweetalert2";
 import "lodash";
 declare var _: any;
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 @Component({
   selector: "ngx-accordion",
   templateUrl: "aplicar-encuestas.component.html",
@@ -27,11 +28,23 @@ export class AplicarEncuestaComponent implements OnInit {
   id_encuesta
   aPregunta = [];
   bMostarTabla=true;
+  user=""
   constructor(
     private service: SmartTableData,
     private dialogService: NbDialogService,
-    private ServicesProvider: ServicesProvider
-  ) {}
+    private ServicesProvider: ServicesProvider,
+    private authService: NbAuthService) {
+
+      this.authService.onTokenChange()
+        .subscribe((token: NbAuthJWTToken) => {
+          console.log(token)
+          if (token.isValid()) {
+            this.user = token['token']; // here we receive a payload from the token and assigns it to our `user` variable 
+          }
+  
+        });
+        console.log(this.user)
+    }
 
   ngOnInit() {
     this.fn_listarEncuestasAsignadas();
@@ -118,7 +131,7 @@ export class AplicarEncuestaComponent implements OnInit {
       solucion: this.aRespuestas,
     };
     console.log(encuesta_responder);
-         this.ServicesProvider.post(SERVICES.LLENAR_ENCUESTA, encuesta_responder).then((response) => {
+         this.ServicesProvider.post(SERVICES.LLENAR_ENCUESTA, encuesta_responder, false, this.user).then((response) => {
       console.log(response);
           this.aRespuestas = [];
       Swal.fire({

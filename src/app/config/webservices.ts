@@ -22,6 +22,13 @@ export const SERVICES = {
   AGREGAR_CORNER:"corner/add/",
   EDITAR_CORNER:"corner/update/",
   ELIMINAR_CORNER:"corner/delete/",
+
+
+
+  //Login
+  LOGIN:"login",
+
+
   SET_JWT_TOKEN: "",
   VERIFY_JWT_TOKEN: "",
 };

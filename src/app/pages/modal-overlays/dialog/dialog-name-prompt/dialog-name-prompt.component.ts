@@ -16,10 +16,13 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 })
 export class DialogNamePromptComponent implements OnInit {
   formEncuesta: FormGroup;
+  formPregunta: FormGroup;
+  formDataEvento: any = new FormData();
   respuesta = false;
   contadorPreguntas = 1;
   aRespuestas = [];
   respuestas = "";
+  preview: any = false;
   preguntas = [
     {
       nombre: this.contadorPreguntas + ". " + "Pregunta",
@@ -27,173 +30,154 @@ export class DialogNamePromptComponent implements OnInit {
     },
   ];
   ngOnInit() {
-    this.formEncuesta = this.fb.group({
-      nombre_encuesta: ["", [Validators.required, Validators.minLength(2)]],
-      descripcion_encuesta: ["", Validators.required],
-      pregunta_encuesta: this.fb.array([]),
-    });
+    this.crearFormulario();
   }
   constructor(
     protected ref: NbDialogRef<DialogNamePromptComponent>,
     private fb: FormBuilder
   ) {}
-  get nombre_encuesta() {
-    return this.formEncuesta.get("nombre_encuesta");
-  }
-  get descripcion_encuesta() {
-    return this.formEncuesta.get("descripcion_encuesta");
-  }
-  public get pregunta_encuesta() {
-    return this.formEncuesta.get("pregunta_encuesta") as FormArray;
-  }
-  public get respuesta_encuesta() {
-    return this.formEncuesta.get("respuesta_encuesta");
-  }
 
-  fn_agregarPregunta() {
-    const preguntasFormGroup = this.fb.group({
-      nombre_pregunta: "",
-      respuesta_encuesta: ["", [Validators.required, Validators.minLength(2)]],
-      /*  respuesta: this.fb.array([this.fn_agregarRespuesta()]) */
+  crearFormulario() {
+    this.formEncuesta = this.fb.group({
+      enc_pregunta: this.fb.array([]),
+      enc_nombre: ["", []],
+      enc_descripcion: ["", []],
     });
-    this.pregunta_encuesta.push(preguntasFormGroup);
-
-
-
-
   }
-  aRespuestaOrdenadas = [];
-  fn_agregarRespuesta(item) {
-    console.log(item);
-    console.log(this.formEncuesta.get("pregunta_encuesta").value);
 
-    let respuesta = this.formEncuesta.get("pregunta_encuesta").value[item]
-      .respuesta_encuesta;
-    this.aRespuestas.push(
-    
-      respuesta
-    );
-    
-    console.log(this.aRespuestas);
-    /*     const preguntasFormGroup = this.fb.group({
-      nombre_respuesta: "",
+  get enc_nombre() {
+    return this.formEncuesta.get("enc_nombre");
+  }
+  get enc_descripcion() {
+    return this.formEncuesta.get("enc_descripcion");
+  }
+  /*   get eve_imagen() {
+    return this.formDataEvento.get("eve_imagen");
+  } */
+  get enc_pregunta(): FormArray {
+    return this.formEncuesta.get("enc_pregunta") as FormArray;
+  }
 
+  agregar_pregunta() {
+    this.formPregunta = this.fb.group({
+      nombrePregunta: new FormControl(""),
+      eve_imagen: ["", []],
+      enc_respuesta: this.fb.array([]),
     });
-    this.pregunta_encuesta.push(preguntasFormGroup); */
+
+    this.enc_pregunta.push(this.formPregunta);
+    console.log(this.enc_pregunta);
   }
 
-  /*   fn_agregarRespuesta() {
-        const respuestas_encuesta = <FormArray>(
-          
-      this.formEncuesta.controls["respuesta_encuesta"]
-    );
-    respuestas_encuesta.push(this.fb.group({ respuesta_enc: [] }));
-   
-    console.log(this.aRespuestas,this.formEncuesta.get("pregunta_encuesta").value);
+  borrarPregunta(indice: number) {
+    this.enc_pregunta.removeAt(indice);
   }
- */
-  fn_eliminarPregunta(indice: number) {
-    this.pregunta_encuesta.removeAt(indice);
+  borrarRespuesta(indice: number) {
+    this.enc_respuesta.removeAt(indice);
   }
 
-  fn_eliminarRespuesta(indice: number) {
-    /*     this.respuesta_encuesta.removeAt(indice); */
+  get enc_respuesta(): FormArray {
+    return this.formPregunta.get("enc_respuesta") as FormArray;
   }
 
-  fn_refrescarFormulario() {
-    this.pregunta_encuesta.controls.slice(0, this.pregunta_encuesta.length);
+  agregar_respuesta() {
+    const formRespuesta = this.fb.group({
+      nombreRespuesta: new FormControl(""),
+    });
+
+    this.enc_respuesta.push(formRespuesta);
   }
 
   cancel() {
     this.ref.close();
   }
 
-  submit(name, descripcion) {
-    console.log(descripcion, this.formEncuesta.get("nombre_encuesta").value);
-    let preguntas = { nombre: name, descripcion: descripcion };
-
-    this.ref.close(preguntas);
-  }
-
-  insertarPregunta() {
-    this.respuesta = true;
-    this.contadorPreguntas++;
-    this.preguntas.push({
-      nombre: this.contadorPreguntas + ". " + "Pregunta",
-      opciones: ["opcion1", "opcion2", "opcion3"],
-    });
-  }
-  insertarRespuesta(item: any) {
-    console.log(item);
-
-    item["opciones"].push("nueva opcion");
-
-    /* item.forEach(element => {
-      console.log(element)      
-    }); */
-    /*     this.preguntas.push({
-          nombre : (this.contadorPreguntas) + ". " + "Pregunta",
-          opcion1: "",
-          opcion2: "",
-          opcion3: "",
-        }) */
-  }
-
-  fn_eliminarArbol(id) {
-    Swal.fire({
-      title: "¿Seguro que quieres eliminar este caso?",
-      text: "Si lo eliminas no podrás recuperarlo",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#00782B",
-      confirmButtonText: "Si, Eliminar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        /*   this.ServicesProvider.preloaderOn(); */
-        console.log(id);
-        let idArb = {
-          id_arbol_general: id,
-        };
-        /*           this.ServicesProvider.post(SERVICES.ELIMINAR_ARBOL, idArb).then(response => {
-                    this.fn_obtenerArboles();
-                    Swal.fire(
-                      '!Eliminado!',
-                      'Formato Eliminado con Éxito',
-                      'success'
-                    )
-                    this.ServicesProvider.preloaderOff();
-              
-                  }) */
-      }
-    });
-  }
-
+  //Guardar formulario
   fn_guardarEncuesta() {
-    console.log(
-      this.formEncuesta.get("nombre_encuesta").value,
-      this.formEncuesta.get("descripcion_encuesta").value,
-      this.formEncuesta.get("pregunta_encuesta").value
-    );
-
-    this.formEncuesta.get("pregunta_encuesta").value.forEach((element) => {
-      if (element.nombre_pregunta != "") {
-        this.aRespuestaOrdenadas.push({
-          nombre: element.nombre_pregunta,
-          respuestas: this.aRespuestas,
-        });
-      }
-      console.log(element)
-
+    let preguntas = [];
+    this.formEncuesta.get("enc_pregunta").value.forEach((element) => {
+      console.log(element);
+      preguntas.push({
+        nombre: element.nombrePregunta,
+        respuestas: element.enc_respuesta,
+        image: element.eve_imagen,
+      });
     });
 
     let encuesta = {
-      "nombre":this.formEncuesta.get("nombre_encuesta").value,
-      "descripcion":this.formEncuesta.get("descripcion_encuesta").value,
-      "preguntas":this.aRespuestaOrdenadas
-   }
-
-    console.log(this.aRespuestaOrdenadas);
+      nombre: this.formEncuesta.get("enc_nombre").value,
+      descripcion: this.formEncuesta.get("enc_descripcion").value,
+      preguntas: preguntas,
+    };
+    console.log(encuesta, this.formDataEvento);
     this.ref.close(encuesta);
+  }
+
+  //subir imagen
+  fileChange(event: any) {
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      let file: any = fileList[0];
+      console.log(file)
+      this.formPregunta.controls["eve_imagen"].setValue(file);
+
+
+/*       this.formDataEvento.delete("eve_imagen");
+      this.formDataEvento.append("eve_imagen", file, file.name); */
+      //this.formEvento.controls["eve_imagen"].setValue(file)
+      this.showImage(event.target);
+    } else {
+      this.preview = false;
+    }
+  }
+  imageSrc:any
+  onFileChange(event) {
+    const reader = new FileReader();
+    
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+    
+      reader.onload = () => {
+   
+        this.imageSrc = reader.result as string;
+        console.log(reader.result)
+        this.formPregunta.patchValue({
+          eve_imagen: reader.result
+        });
+   
+      };
+   
+    }
+  }
+  imageURL: string;
+    // Image Preview
+    showPreview(event) {
+      const file = (event.target as HTMLInputElement).files[0];
+      this.formPregunta.patchValue({
+        eve_imagen: file
+      });
+      this.formPregunta.get('eve_imagen').updateValueAndValidity()
+  
+      // File Preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imageURL = reader.result as string;
+      }
+      reader.readAsDataURL(file)
+    }
+
+
+  //mostrar previa de la imágen
+  showImage(inputValue: any): void {
+    var file: File = inputValue.files[0];
+    var myReader: FileReader = new FileReader();
+    myReader.onloadend = () => {
+      this.preview = myReader.result;
+    };
+    myReader.readAsDataURL(file);
+  }
+  fn_callFile() {
+    document.getElementById("inputfile")!.click();
   }
 }

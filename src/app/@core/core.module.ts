@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbDummyAuthStrategy } from '@nebular/auth';
+import { NbAuthModule, NbDummyAuthStrategy, NbPasswordAuthStrategy } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -52,6 +52,7 @@ import { StatsProgressBarService } from './mock/stats-progress-bar.service';
 import { VisitorsAnalyticsService } from './mock/visitors-analytics.service';
 import { SecurityCamerasService } from './mock/security-cameras.service';
 import { MockDataModule } from './mock/mock-data.module';
+import { SERVICES, URL } from '../../../src/app/config/webservices';
 
 const socialLinks = [
   {
@@ -93,6 +94,8 @@ const DATA_SERVICES = [
   { provide: SecurityCamerasData, useClass: SecurityCamerasService },
 ];
 
+
+
 export class NbSimpleRoleProvider extends NbRoleProvider {
   getRole() {
     // here you could provide any role based on any auth flow
@@ -104,19 +107,101 @@ export const NB_CORE_PROVIDERS = [
   ...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
   ...NbAuthModule.forRoot({
-
+    
     strategies: [
-      NbDummyAuthStrategy.setup({
-        name: 'email',
-        delay: 3000,
+      NbPasswordAuthStrategy.setup({
+    
+        name: 'correo',
+        token: {
+          key: 'token'
+        },
+        baseEndpoint: URL,
+
+        login: {
+          endpoint: SERVICES.LOGIN,
+          method: 'post',
+        },
+        register: {
+          endpoint: '/user/create',
+          method: 'post',
+        },
+        logout: {
+          endpoint: '/user/logout',
+          method: 'post',
+        },
+        requestPass: {
+          endpoint: '/password/forgotpassword',
+          method: 'post',
+        },
+        resetPass: {
+          endpoint: '/password/changepassword',
+          method: 'post',
+        },
       }),
+      
     ],
+    
     forms: {
       login: {
-        socialLinks: socialLinks,
+        redirectDelay: 500,
+        strategy: 'correo',
+        rememberMe: false,
+        showMessages: {
+          success: true,
+          error: true,
+        },
+        redirect: {
+          success: '/',
+          failure: null,
+        },
+        // socialLinks: socialLinks,
       },
       register: {
+        redirectDelay: 500,
+        strategy: 'correo',
+        showMessages: {
+          success: true,
+          error: true,
+        },
+        terms: true,
+        // socialLinks: socialLinks,
+      },
+      requestPassword: {
+        redirectDelay: 500,
+        strategy: 'correo',
+        showMessages: {
+          success: true,
+          error: true,
+        },
         socialLinks: socialLinks,
+      },
+      resetPassword: {
+        redirectDelay: 500,
+        strategy: 'correo',
+        showMessages: {
+          success: true,
+          error: true,
+        },
+        socialLinks: socialLinks,
+      },
+      logout: {
+        redirectDelay: 500,
+        strategy: 'correo',
+      },
+      validation: {
+        password: {
+          required: true,
+          minLength: 8,
+          maxLength: 50,
+        },
+        correo: {
+          required: true,
+        },
+        fullName: {
+          required: false,
+          minLength: 4,
+          maxLength: 100,
+        },
       },
     },
   }).providers,
@@ -134,6 +219,7 @@ export const NB_CORE_PROVIDERS = [
       },
     },
   }).providers,
+
 
   {
     provide: NbRoleProvider, useClass: NbSimpleRoleProvider,

@@ -17,7 +17,7 @@ import {
   FormControl,
   FormBuilder,
 } from "@angular/forms";
-
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 import { Observable, of, throwError } from "rxjs";
 import { debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
 import { MESSAGES } from "./messages";
@@ -35,13 +35,24 @@ export class ServicesProvider {
   appliedFilters: any;
   urlActual: any;
   aStopwords = ["de", "a", "la", "los", "las", "en", "y", "-", ".", ""];
-
+  token = "";
   constructor(
     private http: Http,
     private datePipe: DatePipe,
     private router: Router,
+    private authService: NbAuthService) {
 
-  ) {}
+    this.authService.onTokenChange()
+    .subscribe((token: NbAuthJWTToken) => {
+      console.log(token)
+      if (token.isValid()) {
+        this.token = token['token']; // here we receive a payload from the token and assigns it to our `user` variable 
+      }
+
+    });
+    console.log(this.token)
+    
+  }
 
 
   //tener en el component
@@ -713,6 +724,7 @@ export class ServicesProvider {
     return new Promise((resolve, reject) => {
       const headers = new Headers({
         "Content-Type": "text/plain",
+        'Authorization': this.token
       });
       const options = new RequestOptions({
         headers: headers,
@@ -747,6 +759,7 @@ export class ServicesProvider {
     return new Promise((resolve, reject) => {
       const headers = new Headers({
         "Content-Type": "text/plain",
+        'Authorization': this.token
       });
       const options = new RequestOptions({
         headers: headers,

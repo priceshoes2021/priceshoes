@@ -9,18 +9,26 @@
         margin-right: 1rem;
     }
     .card-tamano {
-        overflow-y: auto;
-        max-height: 100%;
+        overflow-y: auto !important;
+        max-height: 100% !important;
     }
     .action-icon {
         @include nb-ltr(margin-right, 0.5rem);
         @include nb-rtl(margin-left, 0.5rem);
     }
     .header-color-card {
-        color: #ffffff !important;
+     /*    color: #ffffff !important; */
         background: #e62a87 !important;
     }
-    .color_iconos {
+    .header-color{
+        background-color: #33bdff;
+    }
+    .color_icono_pregunta {
+        color: #ffffff !important;
+        float: right;
+    }
+    .color_icono_respuesta {
         color: #e62a87 !important;
+        float: right;
     }
 }
