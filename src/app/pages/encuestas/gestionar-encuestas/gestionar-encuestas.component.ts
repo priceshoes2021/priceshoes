@@ -22,25 +22,25 @@ export class GestionarEncuestaComponent implements OnInit {
 
     this.authService.onTokenChange()
       .subscribe((token: NbAuthJWTToken) => {
-        console.log(token)
+     /*    console.log(token) */
         if (token.isValid()) {
           this.user = token['token']; // here we receive a payload from the token and assigns it to our `user` variable 
         }
 
       });
-      console.log(this.user)
+   /*    console.log(this.user) */
   }
   ngOnInit() {
     this.fn_listarEncuesta()
-    console.log(localStorage.key)
+/*     console.log(localStorage.key) */
     
   }
 
   onDeleteConfirm(event): void {
-    console.log(event)
+    /* console.log(event) */
     if (window.confirm('Seguro que quiere eliminar esta encuesta')) {
       this.removeItemFromArr(this.encuestas, event)
-      console.log(this.encuestas)
+    /*   console.log(this.encuestas) */
     } else {
       event.confirm.reject();
     }
@@ -63,7 +63,7 @@ export class GestionarEncuestaComponent implements OnInit {
   }
 
   removeItemFromArr(arr, item) {
-    console.log(arr, item)
+/*     console.log(arr, item) */
 
 
     arr.splice(item, 1);
@@ -75,7 +75,7 @@ export class GestionarEncuestaComponent implements OnInit {
     this.ServicesProvider.get(SERVICES.LISTAR_ENCUESTAS, {}).then(response => {
 
       this.encuestas = response
-      console.log(response);
+    /*   console.log(response); */
 
     });
 
@@ -83,22 +83,30 @@ export class GestionarEncuestaComponent implements OnInit {
   }
   oEncuesta:{}
   fn_agregarEncuesta(encuesta:any){
-/*     if (ence) {
-      
-    } */
+    var formData: any = new FormData();
+    formData.append("nombre", encuesta.nombre);
+    formData.append("descripcion", encuesta.descripcion);
+    formData.append("preguntas", encuesta.preguntas);
+
+   formData.forEach((value,key) => {
+      console.log(key+" "+value)
+    });
+ 
+    console.log(formData) 
     this.oEncuesta=encuesta;
-    console.log(encuesta)
+    console.log(this.oEncuesta['preguntas'][0].image)
+
     this.ServicesProvider.post(SERVICES.AGREGAR_ENCUESTAS, this.oEncuesta,  false, this.user).then(response => {
-      console.log(response)
+      /* console.log(response) */
       this.fn_listarEncuesta()
       this.ServicesProvider.fn_generarAlerta("exito", "Guardado con éxito")
     })
   }
 
 
-  
+  //ELMINIAR 
   fn_eliminarModelo(id) {
-    console.log(id)
+    /* console.log(id) */
     Swal.fire({
       title: '¿Seguro que quieres eliminar esta encuesta?',
       text: "Si la eliminas no podrás recuperarla",
@@ -111,7 +119,7 @@ export class GestionarEncuestaComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.ServicesProvider.preloaderOn();
-        console.log(id);
+        /* console.log(id); */
 
         let pk_tipoEncuesta = {
           pk_tipoEncuesta: id
@@ -126,7 +134,7 @@ export class GestionarEncuestaComponent implements OnInit {
               timer:1500
             })
           }else{
-            console.log(response);
+          /*   console.log(response); */
             this.fn_listarEncuesta();
             Swal.fire(
               {  icon: 'success',
@@ -145,5 +153,8 @@ export class GestionarEncuestaComponent implements OnInit {
 
 
   }
+
+  
+
 
 }

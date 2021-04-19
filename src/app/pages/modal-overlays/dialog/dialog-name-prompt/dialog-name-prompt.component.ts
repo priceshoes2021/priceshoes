@@ -9,6 +9,7 @@ import {
   FormArray,
 } from "@angular/forms";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClient } from "@angular/common/http";
 @Component({
   selector: "ngx-dialog-name-prompt",
   templateUrl: "dialog-name-prompt.component.html",
@@ -23,7 +24,7 @@ export class DialogNamePromptComponent implements OnInit {
   aRespuestas = [];
   respuestas = "";
   preview: any = false;
-  formDataEncuesta:any = new FormData()
+
   preguntas = [
     {
       nombre: this.contadorPreguntas + ". " + "Pregunta",
@@ -35,7 +36,8 @@ export class DialogNamePromptComponent implements OnInit {
   }
   constructor(
     protected ref: NbDialogRef<DialogNamePromptComponent>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private http: HttpClient
   ) {}
 
   crearFormulario() {
@@ -72,15 +74,6 @@ export class DialogNamePromptComponent implements OnInit {
     this.enc_pregunta.push(this.formPregunta);
   }
 
-  fn_setFormData(){
-    console.log(this.enc_nombre.value)
-    this.formDataEncuesta.append("enc_pregunta", this.enc_pregunta.value);
-    this.formDataEncuesta.append("enc_nombre", this.enc_nombre.value);
-    this.formDataEncuesta.append("enc_descripcion", this.enc_descripcion.value);
-    this.formDataEncuesta.append("nombrePregunta", this.nombrePregunta.value);
-    this.formDataEncuesta.append("eve_imagen", this.eve_imagen.value);
-    this.formDataEncuesta.append("enc_respuesta", this.enc_respuesta.value); 
-  }
 
   borrarPregunta(indice: number) {
     this.enc_pregunta.removeAt(indice);
@@ -107,8 +100,6 @@ export class DialogNamePromptComponent implements OnInit {
 
   //Guardar formulario
   fn_guardarEncuesta() {
-   /*  this.fn_setFormData(); */
-    console.log(this.formDataEncuesta)
     let preguntas = [];
     this.formEncuesta.get("enc_pregunta").value.forEach((element) => {
       console.log(element);
@@ -129,10 +120,9 @@ export class DialogNamePromptComponent implements OnInit {
   }
 
 
+  submit() {
 
-
-
-
+  }
 
 
 //Capturar imagen
@@ -140,12 +130,21 @@ export class DialogNamePromptComponent implements OnInit {
   imageURL: string;
     // Image Preview
     showPreview(event) {
-      let image=[];
+      var image="";
       const file = (event.target as HTMLInputElement).files[0];
-      image.push(file)
+
+      this.http.post("https://apipriceshoes.herokuapp.com/image-upload", formData).subscribe(
+        (response) => image=response['imageUrl'],
+        (error) => console.log(error)
+      ) 
       this.formPregunta.patchValue({
         eve_imagen: image
       });
+
+      var formData: any = new FormData();
+      formData.append("image", file);
+  
+
       this.formPregunta.get('eve_imagen').updateValueAndValidity()
   
       // File Preview
