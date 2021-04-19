@@ -128,21 +128,24 @@ export class DialogNamePromptComponent implements OnInit {
 //Capturar imagen
 
   imageURL: string;
+  image
     // Image Preview
     showPreview(event) {
-      var image="";
+
       const file = (event.target as HTMLInputElement).files[0];
-
-      this.http.post("https://apipriceshoes.herokuapp.com/image-upload", formData).subscribe(
-        (response) => image=response['imageUrl'],
-        (error) => console.log(error)
-      ) 
-      this.formPregunta.patchValue({
-        eve_imagen: image
-      });
-
       var formData: any = new FormData();
       formData.append("image", file);
+      this.http.post("https://apipriceshoes.herokuapp.com/image-upload", formData).subscribe(
+        (response) => 
+        this.formPregunta.patchValue({
+          eve_imagen: response['imageUrl']
+        }),
+        
+        (error) => console.log(error)
+      ) 
+
+
+
   
 
       this.formPregunta.get('eve_imagen').updateValueAndValidity()
