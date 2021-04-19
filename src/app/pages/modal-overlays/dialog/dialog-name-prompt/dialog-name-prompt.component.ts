@@ -52,11 +52,14 @@ export class DialogNamePromptComponent implements OnInit {
   get enc_descripcion() {
     return this.formEncuesta.get("enc_descripcion");
   }
-  /*   get eve_imagen() {
-    return this.formDataEvento.get("eve_imagen");
-  } */
+    get eve_imagen() {
+    return this.formPregunta.get("eve_imagen");
+  } 
   get enc_pregunta(): FormArray {
     return this.formEncuesta.get("enc_pregunta") as FormArray;
+  }
+  get nombrePregunta() {
+    return this.formEncuesta.get("nombrePregunta") ;
   }
 
   agregar_pregunta() {
@@ -71,12 +74,12 @@ export class DialogNamePromptComponent implements OnInit {
 
   fn_setFormData(){
     console.log(this.enc_nombre.value)
-/*     this.formDataEncuesta.append("enc_pregunta", this.formDataEncuesta.controls["enc_pregunta"].value);
-    this.formDataEncuesta.append("enc_nombre", this.formDataEncuesta.controls["enc_nombre"].value);
-    this.formDataEncuesta.append("enc_descripcion", this.formDataEncuesta.controls["enc_descripcion"].value);
-    this.formDataEncuesta.append("nombrePregunta", this.formPregunta.controls["nombrePregunta"].value);
-    this.formDataEncuesta.append("eve_imagen", this.formPregunta.controls["eve_imagen"].value);
-    this.formDataEncuesta.append("enc_respuesta", this.formPregunta.controls["enc_respuesta"].value); */
+    this.formDataEncuesta.append("enc_pregunta", this.enc_pregunta.value);
+    this.formDataEncuesta.append("enc_nombre", this.enc_nombre.value);
+    this.formDataEncuesta.append("enc_descripcion", this.enc_descripcion.value);
+    this.formDataEncuesta.append("nombrePregunta", this.nombrePregunta.value);
+    this.formDataEncuesta.append("eve_imagen", this.eve_imagen.value);
+    this.formDataEncuesta.append("enc_respuesta", this.enc_respuesta.value); 
   }
 
   borrarPregunta(indice: number) {
@@ -104,7 +107,7 @@ export class DialogNamePromptComponent implements OnInit {
 
   //Guardar formulario
   fn_guardarEncuesta() {
-    this.fn_setFormData();
+   /*  this.fn_setFormData(); */
     console.log(this.formDataEncuesta)
     let preguntas = [];
     this.formEncuesta.get("enc_pregunta").value.forEach((element) => {
