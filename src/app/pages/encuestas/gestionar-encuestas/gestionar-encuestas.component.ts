@@ -87,6 +87,7 @@ export class GestionarEncuestaComponent implements OnInit {
       
     } */
     this.oEncuesta=encuesta;
+    console.log(encuesta)
     this.ServicesProvider.post(SERVICES.AGREGAR_ENCUESTAS, this.oEncuesta,  false, this.user).then(response => {
       console.log(response)
       this.fn_listarEncuesta()

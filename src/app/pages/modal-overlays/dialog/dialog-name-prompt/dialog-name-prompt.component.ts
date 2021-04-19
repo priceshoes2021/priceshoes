@@ -23,6 +23,7 @@ export class DialogNamePromptComponent implements OnInit {
   aRespuestas = [];
   respuestas = "";
   preview: any = false;
+  formDataEncuesta:any = new FormData()
   preguntas = [
     {
       nombre: this.contadorPreguntas + ". " + "Pregunta",
@@ -66,7 +67,16 @@ export class DialogNamePromptComponent implements OnInit {
     });
 
     this.enc_pregunta.push(this.formPregunta);
-    console.log(this.enc_pregunta);
+  }
+
+  fn_setFormData(){
+    console.log(this.enc_nombre.value)
+/*     this.formDataEncuesta.append("enc_pregunta", this.formDataEncuesta.controls["enc_pregunta"].value);
+    this.formDataEncuesta.append("enc_nombre", this.formDataEncuesta.controls["enc_nombre"].value);
+    this.formDataEncuesta.append("enc_descripcion", this.formDataEncuesta.controls["enc_descripcion"].value);
+    this.formDataEncuesta.append("nombrePregunta", this.formPregunta.controls["nombrePregunta"].value);
+    this.formDataEncuesta.append("eve_imagen", this.formPregunta.controls["eve_imagen"].value);
+    this.formDataEncuesta.append("enc_respuesta", this.formPregunta.controls["enc_respuesta"].value); */
   }
 
   borrarPregunta(indice: number) {
@@ -94,6 +104,8 @@ export class DialogNamePromptComponent implements OnInit {
 
   //Guardar formulario
   fn_guardarEncuesta() {
+    this.fn_setFormData();
+    console.log(this.formDataEncuesta)
     let preguntas = [];
     this.formEncuesta.get("enc_pregunta").value.forEach((element) => {
       console.log(element);
@@ -109,53 +121,27 @@ export class DialogNamePromptComponent implements OnInit {
       descripcion: this.formEncuesta.get("enc_descripcion").value,
       preguntas: preguntas,
     };
-    console.log(encuesta, this.formDataEvento);
+/*     console.log(encuesta, this.formDataEvento); */
     this.ref.close(encuesta);
   }
 
-  //subir imagen
-  fileChange(event: any) {
-    let fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-      let file: any = fileList[0];
-      console.log(file)
-      this.formPregunta.controls["eve_imagen"].setValue(file);
 
 
-/*       this.formDataEvento.delete("eve_imagen");
-      this.formDataEvento.append("eve_imagen", file, file.name); */
-      //this.formEvento.controls["eve_imagen"].setValue(file)
-      this.showImage(event.target);
-    } else {
-      this.preview = false;
-    }
-  }
-  imageSrc:any
-  onFileChange(event) {
-    const reader = new FileReader();
-    
-    if(event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-    
-      reader.onload = () => {
-   
-        this.imageSrc = reader.result as string;
-        console.log(reader.result)
-        this.formPregunta.patchValue({
-          eve_imagen: reader.result
-        });
-   
-      };
-   
-    }
-  }
+
+
+
+
+
+//Capturar imagen
+
   imageURL: string;
     // Image Preview
     showPreview(event) {
+      let image=[];
       const file = (event.target as HTMLInputElement).files[0];
+      image.push(file)
       this.formPregunta.patchValue({
-        eve_imagen: file
+        eve_imagen: image
       });
       this.formPregunta.get('eve_imagen').updateValueAndValidity()
   
@@ -168,16 +154,5 @@ export class DialogNamePromptComponent implements OnInit {
     }
 
 
-  //mostrar previa de la imágen
-  showImage(inputValue: any): void {
-    var file: File = inputValue.files[0];
-    var myReader: FileReader = new FileReader();
-    myReader.onloadend = () => {
-      this.preview = myReader.result;
-    };
-    myReader.readAsDataURL(file);
-  }
-  fn_callFile() {
-    document.getElementById("inputfile")!.click();
-  }
+
 }

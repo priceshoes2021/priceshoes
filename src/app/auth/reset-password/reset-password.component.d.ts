@@ -5,8 +5,8 @@
  */
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { NbAuthService } from '../../services/auth.service';
 import * as ɵngcc0 from '@angular/core';
+import { NbAuthService } from '@nebular/auth';
 export declare class NbResetPasswordComponent {
     protected service: NbAuthService;
     protected options: {};
