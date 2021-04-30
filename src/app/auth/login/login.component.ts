@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NbLoginComponent } from '@nebular/auth';
 
 @Component({
@@ -7,4 +7,9 @@ import { NbLoginComponent } from '@nebular/auth';
   styleUrls: ["login.component.scss"],
 })
 export class NgxLoginComponent extends NbLoginComponent {
+
+/*   fn_login(event){
+    console.log(event)
+  } */
+
 }

@@ -35,14 +35,9 @@ export class AplicarEncuestaComponent implements OnInit {
     private ServicesProvider: ServicesProvider,
     private authService: NbAuthService) {
 
-      this.authService.onTokenChange()
-        .subscribe((token: NbAuthJWTToken) => {
-          console.log(token)
-          if (token.isValid()) {
-            this.user = token['token']; // here we receive a payload from the token and assigns it to our `user` variable 
-          }
-  
-        });
+
+      this.user = localStorage.getItem("token")
+
         console.log(this.user)
     }
 
@@ -65,24 +60,18 @@ export class AplicarEncuestaComponent implements OnInit {
     this.mostrar_encuesta = [];
     this.ServicesProvider.get(SERVICES.MOSTRAR_ENCUESTA + id, {}).then(
       (response) => {
-        var nuevoArray = [];
-        var arrayTemporal = [];
-        for (var i = 0; i < response.length; i++) {
-          arrayTemporal = nuevoArray.filter(
-            (resp) => resp["pregunta"] == response[i]["pregunta"]
-          );
-          if (arrayTemporal.length > 0) {
-            nuevoArray[nuevoArray.indexOf(arrayTemporal[0])][
-              "nombre_respuesta"
-            ].push(response[i]["nombre_respuesta"]);
-          } else {
-            nuevoArray.push({
-              nombre_encuesta: response[i].nombre,
-              pregunta: response[i]["pregunta"],
-              nombre_respuesta: [response[i]["nombre_respuesta"]],
-            });
-          }
-        }
+        
+       var nuevoArray = [];
+       response.forEach(element => {
+        nuevoArray.push({
+          nombre_encuesta: element.nombre,
+          pregunta: element.pregunta,
+          nombre_respuesta: element.nombre_respuesta,
+          imagen:element.image
+        })
+       });
+
+        
 
         this.mostrar_encuesta = nuevoArray;
         console.log(nuevoArray);
@@ -91,8 +80,14 @@ export class AplicarEncuestaComponent implements OnInit {
     );
   }
   aRespuestas=[]
-  fn_preguntaRespuesta(pregunta, respuesta) {
-    
+  aListaRespuesta=[]
+  fn_preguntaRespuesta(pregunta, respuesta, posicion) {
+    this.aRespuestas[posicion] = {
+      pregunta:pregunta,
+      respuesta:respuesta
+    }
+    console.log(this.aRespuestas)
+/*     console.log(this.aListaRespuesta)
     console.log(pregunta, respuesta);
     let preguntaRepetida=false
     this.aPregunta = [];
@@ -117,9 +112,12 @@ export class AplicarEncuestaComponent implements OnInit {
         pregunta: pregunta,
         respuesta: respuesta,
       });
+     this.aRespuestas.forEach(element => {
+
+     });
     }
     this.aRespuestas.push(this.aPregunta[0])
-    console.log(this.aPregunta, this.aRespuestas);
+    console.log(this.aPregunta, this.aRespuestas); */
   }
 
   fn_llenarEncuesta(id_encuesta) {

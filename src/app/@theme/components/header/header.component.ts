@@ -3,8 +3,10 @@ import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeServ
 
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
-import { map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -16,6 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+  nombre = localStorage.getItem("nombre")
 
   themes = [
     {
@@ -38,16 +41,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [{ title: 'Rol:' + localStorage.getItem("nombre_rol") }, { title: 'Cerrar Sesión' }];
 
   constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private themeService: NbThemeService,
-              private userService: UserData,
-              private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+    private menuService: NbMenuService,
+    private themeService: NbThemeService,
+    private userService: UserData,
+    private layoutService: LayoutService,
+    private breakpointService: NbMediaBreakpointsService,
+    private nbMenuService: NbMenuService,
+    private authService: NbAuthService,
+    private router: Router) {
   }
 
+  logOut(event) {
+    console.log(event)
+  }
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
 
@@ -69,6 +78,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+    this.nbMenuService.onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'my-context-menu'),
+        map(({ item: { title } }) => title),
+      )
+      .subscribe(title => {
+        if(title == "Cerrar Sesión"){ 
+          localStorage.clear(),
+          this.router.navigate(['auth/login'])
+          window.location.reload();
+        }
+
+      }
+
+
+      );
+
+
+
   }
 
   ngOnDestroy() {

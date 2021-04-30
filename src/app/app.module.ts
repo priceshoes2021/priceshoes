@@ -25,6 +25,9 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { AuthGuardRolAdmin } from './auth/auth-guard/auth-guard-rol.service';
+import { AuthGuardRolAsesor } from './auth/auth-guard/auth-guard-rol-asesor';
+import { AuthGuardRolInvitado } from './auth/auth-guard/auth-guard-rol-invitado';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,7 +52,10 @@ import {
   ],
   providers: [
     ServicesProvider,
- /*    AuthGuard */
+    AuthGuard,
+    AuthGuardRolAdmin,
+    AuthGuardRolAsesor,
+    AuthGuardRolInvitado
   ],
   bootstrap: [AppComponent],
 })

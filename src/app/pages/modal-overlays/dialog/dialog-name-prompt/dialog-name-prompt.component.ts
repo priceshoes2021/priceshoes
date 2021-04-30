@@ -10,6 +10,7 @@ import {
 } from "@angular/forms";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
+import { async, waitForAsync } from "@angular/core/testing";
 @Component({
   selector: "ngx-dialog-name-prompt",
   templateUrl: "dialog-name-prompt.component.html",
@@ -54,14 +55,14 @@ export class DialogNamePromptComponent implements OnInit {
   get enc_descripcion() {
     return this.formEncuesta.get("enc_descripcion");
   }
-    get eve_imagen() {
+  get eve_imagen() {
     return this.formPregunta.get("eve_imagen");
-  } 
+  }
   get enc_pregunta(): FormArray {
     return this.formEncuesta.get("enc_pregunta") as FormArray;
   }
   get nombrePregunta() {
-    return this.formEncuesta.get("nombrePregunta") ;
+    return this.formEncuesta.get("nombrePregunta");
   }
 
   agregar_pregunta() {
@@ -73,7 +74,6 @@ export class DialogNamePromptComponent implements OnInit {
 
     this.enc_pregunta.push(this.formPregunta);
   }
-
 
   borrarPregunta(indice: number) {
     this.enc_pregunta.removeAt(indice);
@@ -90,6 +90,7 @@ export class DialogNamePromptComponent implements OnInit {
     const formRespuesta = this.fb.group({
       nombreRespuesta: new FormControl(""),
     });
+    console.log(formRespuesta);
 
     this.enc_respuesta.push(formRespuesta);
   }
@@ -101,63 +102,63 @@ export class DialogNamePromptComponent implements OnInit {
   //Guardar formulario
   fn_guardarEncuesta() {
     let preguntas = [];
+    let respuestas = [];
+
     this.formEncuesta.get("enc_pregunta").value.forEach((element) => {
       console.log(element);
+      element.enc_respuesta.forEach((element2) => {
+        console.log(element2.nombreRespuesta);
+        respuestas.push(element2.nombreRespuesta);
+      });
+
+      console.log(respuestas);
       preguntas.push({
         nombre: element.nombrePregunta,
-        respuestas: element.enc_respuesta,
+        respuestas: respuestas,
         image: element.eve_imagen,
       });
+      respuestas=[];
     });
 
     let encuesta = {
       nombre: this.formEncuesta.get("enc_nombre").value,
       descripcion: this.formEncuesta.get("enc_descripcion").value,
       preguntas: preguntas,
+      n_preguntas:preguntas.length
     };
-/*     console.log(encuesta, this.formDataEvento); */
+    /*     console.log(encuesta, this.formDataEvento); */
     this.ref.close(encuesta);
   }
 
+  submit() {}
 
-  submit() {
-
-  }
-
-
-//Capturar imagen
+  //Capturar imagen
 
   imageURL: string;
-  image
-    // Image Preview
-    showPreview(event) {
+  image;
+  // Image Preview
+  showPreview(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    var formData: any = new FormData();
+    formData.append("image", file);
+    this.http
+      .post("https://apipriceshoes.herokuapp.com/image-upload", formData)
+      .subscribe(
+        (response) =>
+          this.formPregunta.patchValue({
+            eve_imagen: response["imageUrl"],
+          }),
 
-      const file = (event.target as HTMLInputElement).files[0];
-      var formData: any = new FormData();
-      formData.append("image", file);
-      this.http.post("https://apipriceshoes.herokuapp.com/image-upload", formData).subscribe(
-        (response) => 
-        this.formPregunta.patchValue({
-          eve_imagen: response['imageUrl']
-        }),
-        
         (error) => console.log(error)
-      ) 
+      );
 
+    this.formPregunta.get("eve_imagen").updateValueAndValidity();
 
-
-  
-
-      this.formPregunta.get('eve_imagen').updateValueAndValidity()
-  
-      // File Preview
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imageURL = reader.result as string;
-      }
-      reader.readAsDataURL(file)
-    }
-
-
-
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageURL = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
 }

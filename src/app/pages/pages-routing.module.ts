@@ -8,6 +8,11 @@ import { NotFoundComponent } from './miscellaneous/not-found/not-found.component
 import { ComprasComponent } from './compras/compras.component';
 import { VisitantesComponent } from './visitantes/visitantes.component';
 import { VisitantesModule } from './visitantes/visitantes.module';
+import { AuthGuard } from '../auth/auth-guard/auth-guard.service';
+import { AuthGuardRolAdmin } from '../auth/auth-guard/auth-guard-rol.service';
+import { AuthGuardRolAsesor } from '../auth/auth-guard/auth-guard-rol-asesor';
+import { AuthGuardRolDirectivo } from '../auth/auth-guard/auth-guard-rol-directivo';
+import { AuthGuardRolInvitado } from '../auth/auth-guard/auth-guard-rol-invitado';
 
 
 const routes: Routes = [{
@@ -37,16 +42,19 @@ const routes: Routes = [{
     },
     {
       path: 'visitantes',
+      canActivate: [AuthGuard, AuthGuardRolAdmin], 
       loadChildren: () => import('./visitantes/visitantes.module')
         .then(m => m.VisitantesModule),
     }, 
      {
       path: 'encuestas',
+      canActivate: [AuthGuard], 
       loadChildren: () => import('./encuestas/encuesta.module')
         .then(m => m.EncuestaModule),
     }, 
      {
       path: 'inventario',
+      canActivate: [AuthGuard, AuthGuardRolAdmin], 
       loadChildren: () => import('./inventario/inventario.module')
         .then(m => m.InventarioModule),
     },  

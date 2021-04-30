@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbDummyAuthStrategy, NbPasswordAuthStrategy } from '@nebular/auth';
+import { getDeepFromObject, NbAuthJWTToken, NbAuthModule, NbDummyAuthStrategy, NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -53,6 +53,8 @@ import { VisitorsAnalyticsService } from './mock/visitors-analytics.service';
 import { SecurityCamerasService } from './mock/security-cameras.service';
 import { MockDataModule } from './mock/mock-data.module';
 import { SERVICES, URL } from '../../../src/app/config/webservices';
+import { PagesComponent } from '../pages/pages.component';
+import { HttpResponse } from '@angular/common/http';
 
 const socialLinks = [
   {
@@ -71,6 +73,8 @@ const socialLinks = [
     icon: 'twitter',
   },
 ];
+
+const  usuario=[]
 
 const DATA_SERVICES = [
   { provide: UserData, useClass: UserService },
@@ -106,20 +110,31 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
 export const NB_CORE_PROVIDERS = [
   ...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
+  
   ...NbAuthModule.forRoot({
     
     strategies: [
       NbPasswordAuthStrategy.setup({
     
         name: 'correo',
+        
         token: {
-          key: 'token'
+          key: 'token',
+          class:NbAuthJWTToken,
+          getter: (module: string, res: HttpResponse<Object>, options: NbPasswordAuthStrategyOptions) => getDeepFromObject(
+            res.body,
+            options.token.key,
+          ),
         },
         baseEndpoint: URL,
 
         login: {
           endpoint: SERVICES.LOGIN,
           method: 'post',
+          redirect:{
+            success:"pages",
+            failure:null
+          }
         },
         register: {
           endpoint: '/user/create',
@@ -245,6 +260,8 @@ export class CoreModule {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 
+  
+
   static forRoot(): ModuleWithProviders<CoreModule> {
     return {
       ngModule: CoreModule,
@@ -254,3 +271,8 @@ export class CoreModule {
     };
   }
 }
+
+export const GlobalVariable = Object.freeze({
+  USUARIO: usuario,
+  //... more of your variables
+});

@@ -41,17 +41,9 @@ export class ServicesProvider {
     private datePipe: DatePipe,
     private router: Router,
     private authService: NbAuthService) {
+    this.token =localStorage.getItem("token")
 
-    this.authService.onTokenChange()
-    .subscribe((token: NbAuthJWTToken) => {
-      console.log(token)
-      if (token.isValid()) {
-        this.token = token['token']; // here we receive a payload from the token and assigns it to our `user` variable 
-      }
-
-    });
-    console.log(this.token)
-    
+        
   }
 
 

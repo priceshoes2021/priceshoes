@@ -63,7 +63,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/encuestas/asignar-encuestas',
       },
       {
-        title: 'Informes',
+        title: 'Informes Encuesta',
         link: '/pages/encuestas/informes-encuestas',
       }
     ],
@@ -94,7 +94,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/layout/tabs',
       },
       {
-        title: 'Informes',
+        title: 'Informes Inventario',
         pathMatch: 'prefix',
         link: '/pages/layout/tabs',
       },

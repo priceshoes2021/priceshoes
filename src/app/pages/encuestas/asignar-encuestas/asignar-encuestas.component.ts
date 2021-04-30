@@ -24,14 +24,7 @@ export class AsignarEncuestaComponent implements OnInit {
   encuestas =[]
   constructor(private service: SmartTableData, private dialogService: NbDialogService, private ServicesProvider: ServicesProvider,private authService: NbAuthService) {
 
-    this.authService.onTokenChange()
-      .subscribe((token: NbAuthJWTToken) => {
-        console.log(token)
-        if (token.isValid()) {
-          this.user = token['token']; // here we receive a payload from the token and assigns it to our `user` variable 
-        }
-
-      });
+    this.user = localStorage.getItem("token")
       console.log(this.user)
   }
   ngOnInit(){

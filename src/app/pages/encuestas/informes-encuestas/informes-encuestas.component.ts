@@ -55,14 +55,7 @@ export class InformesEncuestaComponent implements OnInit, OnDestroy {
     private theme: NbThemeService,
     private authService: NbAuthService) {
 
-      this.authService.onTokenChange()
-        .subscribe((token: NbAuthJWTToken) => {
-          console.log(token)
-          if (token.isValid()) {
-            this.user = token['token']; // here we receive a payload from the token and assigns it to our `user` variable 
-          }
-  
-        });
+      this.user = localStorage.getItem("token")
         console.log(this.user)
     }
 
@@ -168,15 +161,10 @@ export class InformesEncuestaComponent implements OnInit, OnDestroy {
       this.aEncuestas = response.encuestas_filtro;
       this.aPreguntas = response.preguntas;
       this.KPI=response.kpi
-      this.encuestasAsignadas = _.chain(encuesta)
-        .groupBy("encuesta")
-        .map((encuesta, datos) => ({ encuesta, datos, cantidad:12 }))
-        .value();
+
         this.fn_graficarBarras();
         
-        this.encuestasAsignadas[0].cantidad=15
-        this.encuestasAsignadas[1].cantidad=14
-        this.encuestasAsignadas[2].cantidad=8
+        this.encuestasAsignadas=response.encuestas
       console.log(response, this.encuestasAsignadas);
     });
   }
