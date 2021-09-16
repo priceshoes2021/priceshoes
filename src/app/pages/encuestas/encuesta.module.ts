@@ -23,6 +23,7 @@ import {
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
+  NbToggleModule
 } from "@nebular/theme";
 import { EncuestaComponent } from "./encuesta.component";
 import { AsignarEncuestaComponent } from "./asignar-encuestas/asignar-encuestas.component";
@@ -58,6 +59,7 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
     NbInputModule,
     NbRadioModule,
     NbSelectModule,
+    NbToggleModule
   ],
 
   declarations: [

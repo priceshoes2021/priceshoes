@@ -17,8 +17,10 @@
         @include nb-rtl(margin-left, 0.5rem);
     }
     .header-color-card {
-        color: #ffffff !important;
-        background: #e62a87 !important;
+        backdrop-filter: blur(5px);
+        background-color: rgba(66, 99, 152, 0.6);
+        position: relative;
+        z-index: 9;
     }
     .color_iconos {
         color: #e62a87 !important;

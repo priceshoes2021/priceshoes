@@ -17,8 +17,10 @@
         @include nb-rtl(margin-left, 0.5rem);
     }
     .header-color-card {
-        color: #ffffff !important;
-        background: #e62a87 !important;
+        backdrop-filter: blur(5px);
+        background-color: rgba(66, 99, 152, 0.6);
+        position: relative;
+        z-index: 9;
     }
     .color_iconos {
         color: #e62a87 !important;
@@ -42,8 +44,8 @@
         color: #33bdff !important;
     }
     .btn-azul {
-        background-color: #33bdff;
-        border-color: #6bafd7;
+        background-color: #33bdff !important;
+        border-color: #6bafd7 !important;
         color: #ffffff;
     }
     a.su-button.su-button-style-default:visited {
@@ -58,6 +60,21 @@
         position: absolute;
         right: 10px;
     }
-    button:focus{background-color:#33bdff !important;}
+    button:focus{background-color:#015780 !important;}
+
+    .edit-button {
+/*         background-image: url(../../../../assets/emociones/happy.svg); */
+        background-size: 100%;
+        background-repeat: no-repeat;
+        width: 50px;
+        height: 50px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .edit-button:focus{
+        width: 70px;
+        height: 70px;
+    }
 }
 

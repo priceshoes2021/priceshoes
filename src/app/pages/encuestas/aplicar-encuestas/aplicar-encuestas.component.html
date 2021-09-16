@@ -26,7 +26,9 @@
                             <td>{{ item.tienda }}</td>
 
                             <td>
-                                <i class="mx-1 fa fa-check-circle icon pointer" nbTooltip="Responder Encuesta" (click)="fn_MostrartEncuesta(item.pk_tipoEncuesta,item.tbl_tienda_pk_tienda, item.pk_aplicacionEncuesta)" nbTooltipPlacement="top" nbTooltipStatus="info"></i>
+                                <i class="mx-1 fa fa-check-circle icon pointer" nbTooltip="Responder Encuesta"
+                                    (click)="fn_MostrartEncuesta(item.pk_tipoEncuesta,item.tbl_tienda_pk_tienda, item.pk_aplicacionEncuesta)"
+                                    nbTooltipPlacement="top" nbTooltipStatus="info"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -43,7 +45,8 @@
                 <h2 class="text-white text-center">
                     {{item.nombre_encuesta}}
                 </h2>
-                <i class="posicion-cerrar-encuesta icon-size fa fa-window-close text-white icon pointer" (click)="bMostarTabla=true"></i>
+                <i class="posicion-cerrar-encuesta icon-size fa fa-window-close text-white icon pointer"
+                    (click)="bMostarTabla=true"></i>
             </div>
         </nb-card-header>
         <nb-card-body>
@@ -51,17 +54,30 @@
             <div class="d-flex justify-content-center card">
                 <h6 class="texto-azul text-center">{{ item.pregunta }}</h6>
             </div>
-            <div *ngIf="item.imagen !=''" class="imagePreview d-flex justify-content-center" >
+            <div *ngIf="item.imagen !=''" class="imagePreview d-flex justify-content-center">
                 <img width="200px" height="200px" [src]="item.imagen" [alt]="item.imagen">
-              </div>
-            <div [id]="i"  class="mt-3 d-flex h-100 align-items-center justify-content-center">
+            </div>
+            <div [id]="i" class="mt-3 d-flex h-100 align-items-center justify-content-center">
                 <ng-container *ngFor="let respuesta of item['nombre_respuesta']">
-                    <button class="m-2" nbButton [status]="'info'" (click)="fn_preguntaRespuesta(item.pregunta, respuesta, i)">
+                    <button *ngIf="respuesta[0] != 1" class="m-2" nbButton [status]="'info'"
+                        (click)="fn_preguntaRespuesta(item.pregunta, respuesta, i)">
                         <!--  <i class="mx-1 icon-size fa fa-grin-beam text-white icon pointer" ></i> -->{{respuesta}}
-                       </button>
+                    </button>
+                    <div *ngIf="respuesta[0] == 1">
+                        <input class="edit-button" type="image" src="../../../../assets/emociones/happy.svg"
+                            (click)="fn_preguntaRespuesta(item.pregunta, 'Muy Feliz', i)" />
+                        <input class="edit-button" type="image" src="../../../../assets/emociones/happiness.svg"
+                            (click)="fn_preguntaRespuesta(item.pregunta, 'Feliz', i)" />
+                        <input class="edit-button" type="image" src="../../../../assets/emociones/sad.svg"
+                            (click)="fn_preguntaRespuesta(item.pregunta, 'Triste', i)" />
+                        <input class="edit-button" type="image" src="../../../../assets/emociones/sad2.svg"
+                            (click)="fn_preguntaRespuesta(item.pregunta, 'Decepcionado', i)" />
+                    </div>
+
+
                 </ng-container>
 
-<!--                 <button class="m-2" nbButton [status]="'warning'" (click)="fn_preguntaRespuesta(item.pregunta, 'Regular')">
+                <!--                 <button class="m-2" nbButton [status]="'warning'" (click)="fn_preguntaRespuesta(item.pregunta, 'Regular')">
             <i class="mx-1 icon-size fa fa-meh text-white icon pointer" ></i>Regular
           </button>
                 <button class="m-2" nbButton [status]="'danger'" (click)="fn_preguntaRespuesta(item.pregunta, 'Malo')">
@@ -69,8 +85,15 @@
           </button> -->
             </div>
         </nb-card-body>
-        <button *ngIf="i == mostrar_encuesta.length-1" class="m-2 btn-azul" nbButton [status]="'primary'" (click)="fn_llenarEncuesta(item.pk_aplicacionEncuesta)">
-            <i class="mx-1 fa fa-save text-white icon pointer"></i>enviar
-          </button>
+        <div class="d-flex justify-content-center">
+            <button *ngIf="i == mostrar_encuesta.length-1" class="m-2 btn-azul w-25" nbButton [status]="'primary'"
+                (click)="fn_llenarEncuesta(item.pk_aplicacionEncuesta, true)">
+                <i class="mx-1 fa fa-check-square text-white icon pointer"></i>Responder otra encuesta
+            </button>
+            <button *ngIf="i == mostrar_encuesta.length-1" class="m-2 btn-azul w-25" nbButton [status]="'primary'"
+                (click)="fn_llenarEncuesta(item.pk_aplicacionEncuesta, false)">
+                <i class="mx-1 fa fa-save text-white icon pointer"></i>Responder la misma encuesta
+            </button>
+        </div>
     </nb-card>
 </div>

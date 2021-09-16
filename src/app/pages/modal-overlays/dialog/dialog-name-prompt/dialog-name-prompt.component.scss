@@ -17,8 +17,10 @@
         @include nb-rtl(margin-left, 0.5rem);
     }
     .header-color-card {
-     /*    color: #ffffff !important; */
-        background: #e62a87 !important;
+        backdrop-filter: blur(5px);
+        background-color: rgba(66, 99, 152, 0.6);
+        position: relative;
+        z-index: 9;
     }
     .header-color{
         background-color: #33bdff;
@@ -31,4 +33,35 @@
         color: #e62a87 !important;
         float: right;
     }
+    nb-card-body {
+        overflow: visible;
+        padding-top: 0;
+      
+        > * {
+          margin-top: 1rem;
+        }
+      }
+      
+      .full-name-inputs,
+      .validation-checkboxes {
+        display: flex;
+        margin: 0 -0.5rem;
+      
+        > * {
+          margin: 0 0.5rem;
+        }
+      }
+      
+      .checkbox-radio {
+        display: flex;
+      }
+      
+      .demo-items {
+        flex: 1 0 33%;
+      }
+
+      .d-none{
+          display: none;
+      }
+      
 }

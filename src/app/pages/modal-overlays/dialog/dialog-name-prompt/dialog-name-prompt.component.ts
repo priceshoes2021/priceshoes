@@ -20,12 +20,12 @@ export class DialogNamePromptComponent implements OnInit {
   formEncuesta: FormGroup;
   formPregunta: FormGroup;
   formDataEvento: any = new FormData();
-  respuesta = false;
+  respuesta: boolean;
   contadorPreguntas = 1;
   aRespuestas = [];
   respuestas = "";
   preview: any = false;
-
+  bEscalaEmociones = false;
   preguntas = [
     {
       nombre: this.contadorPreguntas + ". " + "Pregunta",
@@ -39,7 +39,7 @@ export class DialogNamePromptComponent implements OnInit {
     protected ref: NbDialogRef<DialogNamePromptComponent>,
     private fb: FormBuilder,
     private http: HttpClient
-  ) {}
+  ) { }
 
   crearFormulario() {
     this.formEncuesta = this.fb.group({
@@ -64,6 +64,9 @@ export class DialogNamePromptComponent implements OnInit {
   get nombrePregunta() {
     return this.formEncuesta.get("nombrePregunta");
   }
+  get emociones() {
+    return this.formEncuesta.get("emociones");
+  }
 
   agregar_pregunta() {
     this.formPregunta = this.fb.group({
@@ -71,7 +74,7 @@ export class DialogNamePromptComponent implements OnInit {
       eve_imagen: ["", []],
       enc_respuesta: this.fb.array([]),
     });
-
+    console.log(this.formPregunta)
     this.enc_pregunta.push(this.formPregunta);
   }
 
@@ -86,13 +89,17 @@ export class DialogNamePromptComponent implements OnInit {
     return this.formPregunta.get("enc_respuesta") as FormArray;
   }
 
-  agregar_respuesta() {
+  agregar_respuesta(event?) {
+    let bEmocion = false
+    if (event) {
+      bEmocion = event.target.checked
+    }
     const formRespuesta = this.fb.group({
       nombreRespuesta: new FormControl(""),
+      emociones: bEmocion
     });
-    console.log(formRespuesta);
-
     this.enc_respuesta.push(formRespuesta);
+    console.log(this.enc_respuesta)
   }
 
   cancel() {
@@ -108,29 +115,50 @@ export class DialogNamePromptComponent implements OnInit {
       console.log(element);
       element.enc_respuesta.forEach((element2) => {
         console.log(element2.nombreRespuesta);
-        respuestas.push(element2.nombreRespuesta);
+        if (element2.emociones) {
+          respuestas.push(element2.emociones);
+        }
+        else{
+          respuestas.push(element2.nombreRespuesta);
+        }
+        
+
       });
 
       console.log(respuestas);
+
       preguntas.push({
         nombre: element.nombrePregunta,
         respuestas: respuestas,
         image: element.eve_imagen,
+
+
       });
-      respuestas=[];
+      respuestas = [];
     });
 
     let encuesta = {
       nombre: this.formEncuesta.get("enc_nombre").value,
       descripcion: this.formEncuesta.get("enc_descripcion").value,
       preguntas: preguntas,
-      n_preguntas:preguntas.length
+      n_preguntas: preguntas.length
     };
     /*     console.log(encuesta, this.formDataEvento); */
     this.ref.close(encuesta);
   }
 
-  submit() {}
+  selectScale(event: any) {
+    console.log(event.target.checked)
+    if (this.bEscalaEmociones) {
+      this.bEscalaEmociones = false
+    }
+    else {
+      this.bEscalaEmociones = true
+    }
+
+  }
+
+  submit() { }
 
   //Capturar imagen
 

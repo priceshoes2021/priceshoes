@@ -21,6 +21,8 @@ import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
   styleUrls: ["aplicar-encuestas.component.scss"],
 })
 export class AplicarEncuestaComponent implements OnInit {
+
+  
   //Variables
   mostrar_encuesta: any;
   encuestasAsignadas;
@@ -120,7 +122,7 @@ export class AplicarEncuestaComponent implements OnInit {
     console.log(this.aPregunta, this.aRespuestas); */
   }
 
-  fn_llenarEncuesta(id_encuesta) {
+  fn_llenarEncuesta(id_encuesta, bMismaEncuesta) {
     console.log(id_encuesta);
 
     let encuesta_responder = {
@@ -139,7 +141,12 @@ export class AplicarEncuestaComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500,
       });
-      this.bMostarTabla=true;
+      if(bMismaEncuesta){
+        this.bMostarTabla=true;
+      }else{
+        
+      }
+      
     }); 
   }
 }
