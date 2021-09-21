@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { NgxEchartsModule } from 'ngx-echarts';
+import { NgxEchartsModule } from "ngx-echarts";
 
-import { ChartModule } from 'angular2-chartjs';
+import { ChartModule } from "angular2-chartjs";
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Ng2SmartTableModule } from "ng2-smart-table";
@@ -31,9 +31,12 @@ import { InformesEncuestaComponent } from "./informes-encuestas/informes-encuest
 import { GestionarEncuestaComponent } from "./gestionar-encuestas/gestionar-encuestas.component";
 import { EncuestasRoutingModule } from "./encuestas-routing.module";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { ModalBienvenidaComponent } from "./aplicar-encuestas/modal-bienvenida/modal-bienvenida.component";
+import { DemoMaterialModule } from "../../demo-material-module";
 
 @NgModule({
   imports: [
+    DemoMaterialModule,
     FormsModule,
     ReactiveFormsModule,
     NbTabsetModule,
@@ -65,10 +68,8 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
     GestionarEncuestaComponent,
     AsignarEncuestaComponent,
     AplicarEncuestaComponent,
-    
     InformesEncuestaComponent,
-    
-    
+    ModalBienvenidaComponent,
   ],
   providers: [],
 })

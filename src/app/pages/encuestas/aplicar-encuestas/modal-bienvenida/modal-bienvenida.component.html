@@ -1,0 +1,30 @@
+<div>
+  <mat-card class="card">
+    <mat-card-header class="card-header">
+      <mat-card-title class="card-title">Bienvenido(a)</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-content">
+      <p>
+        Gracias por tu compra! <br />
+        Te envitamos a diligenciar la siguiente encuesta y a brindarnos tus
+        datos ya que con la informacion aca diligenciada podras estar atento a
+        nuestras promociones y a acceder a descuentos especiales en tu
+        cumpleaños y/o campañas especiales. Deseas continuar con la encuesta:
+      </p>
+      <div class="buttons">
+        <button
+          mat-stroked-button
+          class="button-success"
+          mat-dialog-close="true"
+        >
+          Si
+          <mat-icon (click)="closeSucces()">sentiment_satisfied_alt</mat-icon>
+        </button>
+        <button mat-stroked-button class="button-cancel">
+          No
+          <mat-icon (click)="closeDialog()">sentiment_dissatisfied</mat-icon>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

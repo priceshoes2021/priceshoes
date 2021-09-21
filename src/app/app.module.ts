@@ -5,7 +5,7 @@
  */
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
@@ -28,6 +28,7 @@ import {
 import { AuthGuardRolAdmin } from './auth/auth-guard/auth-guard-rol.service';
 import { AuthGuardRolAsesor } from './auth/auth-guard/auth-guard-rol-asesor';
 import { AuthGuardRolInvitado } from './auth/auth-guard/auth-guard-rol-invitado';
+import { DemoMaterialModule } from './demo-material-module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,6 +36,7 @@ import { AuthGuardRolInvitado } from './auth/auth-guard/auth-guard-rol-invitado'
     BrowserModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    DemoMaterialModule,
     HttpClientModule,
     HttpModule,
     AppRoutingModule,
@@ -58,6 +60,7 @@ import { AuthGuardRolInvitado } from './auth/auth-guard/auth-guard-rol-invitado'
     AuthGuardRolInvitado
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {
 }

@@ -1,63 +1,137 @@
-@import '../../../@theme/styles/themes';
+@import "../../../@theme/styles/themes";
 @include nb-install-component() {
-    input {
-        width: 100%;
-        max-width: 80% !important;
-        margin-bottom: 1rem;
+  input {
+    width: 100%;
+    max-width: 80% !important;
+    margin-bottom: 1rem;
+  }
+  .cancel {
+    margin-right: 1rem;
+  }
+  .card-tamano {
+    overflow-y: auto;
+    max-height: 100%;
+  }
+  .action-icon {
+    @include nb-ltr(margin-right, 0.5rem);
+    @include nb-rtl(margin-left, 0.5rem);
+  }
+  .header-color-card {
+    color: #ffffff !important;
+    background: #e62a87 !important;
+  }
+  .color_iconos {
+    color: #e62a87 !important;
+  }
+  ngx-chartjs-pie,
+  ngx-chartjs-bar,
+  ngx-chartjs-line,
+  ngx-chartjs-multiple-xaxis,
+  ngx-chartjs-bar-horizontal,
+  ngx-chartjs-radar {
+    display: block;
+    height: nb-theme(card-height-medium);
+    width: 100%;
+    ::ng-deep chart {
+      display: block;
+      height: 100%;
+      width: 100%;
     }
-    .cancel {
-        margin-right: 1rem;
-    }
-    .card-tamano {
-        overflow-y: auto;
-        max-height: 100%;
-    }
-    .action-icon {
-        @include nb-ltr(margin-right, 0.5rem);
-        @include nb-rtl(margin-left, 0.5rem);
-    }
-    .header-color-card {
-        color: #ffffff !important;
-        background: #e62a87 !important;
-    }
-    .color_iconos {
-        color: #e62a87 !important;
-    }
-    ngx-chartjs-pie,
-    ngx-chartjs-bar,
-    ngx-chartjs-line,
-    ngx-chartjs-multiple-xaxis,
-    ngx-chartjs-bar-horizontal,
-    ngx-chartjs-radar {
-        display: block;
-        height: nb-theme(card-height-medium);
-        width: 100%;
-         ::ng-deep chart {
-            display: block;
-            height: 100%;
-            width: 100%;
-        }
-    }
-    .texto-azul {
-        color: #33bdff !important;
-    }
-    .btn-azul {
-        background-color: #33bdff;
-        border-color: #6bafd7;
-        color: #ffffff;
-    }
-    a.su-button.su-button-style-default:visited {
-        background-color: green!important;
-        border-color: green!important;
-        border: 2px solid black!important;
-    }
-    .icon-size {
-        font-size: 25px;
-    }
-    .posicion-cerrar-encuesta {
-        position: absolute;
-        right: 10px;
-    }
-    button:focus{background-color:#33bdff !important;}
-}
+  }
+  .texto-azul {
+    color: #33bdff !important;
+  }
+  .btn-azul {
+    background-color: #33bdff;
+    border-color: #6bafd7;
+    color: #ffffff;
+  }
+  a.su-button.su-button-style-default:visited {
+    background-color: green !important;
+    border-color: green !important;
+    border: 2px solid black !important;
+  }
+  .icon-size {
+    font-size: 25px;
+  }
+  .posicion-cerrar-encuesta {
+    position: absolute;
+    right: 10px;
+  }
+  button:focus {
+    background-color: #33bdff !important;
+  }
 
+  .card {
+    background-color: rgb(255, 255, 255);
+    border: none;
+  }
+
+  .card-header {
+    background: none;
+    border: none;
+  }
+
+  .card-title {
+    font-size: 20px;
+    color: rgb(52, 79, 196);
+  }
+
+  .section {
+    margin: 20px auto;
+    border: 1px solid #e62a87;
+  }
+
+  .section-title {
+    margin: 20px auto;
+    font-size: 20px;
+  }
+
+  .item {
+    margin: 5px 50px;
+    align-self: center;
+    font-size: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+  }
+
+  .icon-face {
+    background-color: #e5ff00;
+    border-radius: 100%;
+    font-size: 35px;
+    font-weight: 500;
+    width: 35px;
+    height: 35px;
+  }
+
+  .item-p {
+    font-size: 35px;
+    font-weight: 600;
+    margin-left: 5px;
+  }
+
+  .card-content {
+    text-align: justify;
+    margin: auto 20px;
+  }
+
+  .buttons {
+    display: flex;
+    margin: 30px auto;
+    justify-content: flex-end;
+  }
+
+  .button-success {
+    margin: 5px;
+    color: #e62a87;
+    border-color: #e62a87;
+    align-self: flex-end;
+  }
+
+  .button-cancel {
+    margin: 5px;
+    color: #b82c19;
+    border-color: #b82c19;
+  }
+}

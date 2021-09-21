@@ -14,7 +14,10 @@ import { ServicesProvider } from "../../../config/services";
 import Swal from "sweetalert2";
 import "lodash";
 declare var _: any;
-import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
+import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
+import { ModalBienvenidaComponent } from "./modal-bienvenida/modal-bienvenida.component";
+import { result } from "lodash";
+import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "ngx-accordion",
   templateUrl: "aplicar-encuestas.component.html",
@@ -24,22 +27,31 @@ export class AplicarEncuestaComponent implements OnInit {
   //Variables
   mostrar_encuesta: any;
   encuestasAsignadas;
-  id_tienda
-  id_encuesta
+  id_tienda;
+  id_encuesta;
   aPregunta = [];
-  bMostarTabla=true;
-  user=""
+  bMostarTabla = true;
+  user = "";
+  tab = 0;
+  aceptar = true;
+  submitted = false;
+
+  tiposDocumento = [
+    { name: "Tarjeta de Identidad", id: "Tarjeta de Identidad" },
+    { name: "Cédula de Ciudadanía", id: "Cédula de Ciudadanía" },
+    { name: "Cédula de Extrangería", id: "Cédula de Extrangería" },
+  ];
   constructor(
     private service: SmartTableData,
     private dialogService: NbDialogService,
     private ServicesProvider: ServicesProvider,
-    private authService: NbAuthService) {
+    private authService: NbAuthService,
+    private dialog: MatDialog
+  ) {
+    this.user = localStorage.getItem("token");
 
-
-      this.user = localStorage.getItem("token")
-
-        console.log(this.user)
-    }
+    console.log(this.user);
+  }
 
   ngOnInit() {
     this.fn_listarEncuestasAsignadas();
@@ -55,39 +67,44 @@ export class AplicarEncuestaComponent implements OnInit {
   }
 
   fn_MostrartEncuesta(id, tienda, id_aplicacionEncuesta) {
-    this.id_tienda = tienda
-    this.id_encuesta =id_aplicacionEncuesta
-    this.mostrar_encuesta = [];
-    this.ServicesProvider.get(SERVICES.MOSTRAR_ENCUESTA + id, {}).then(
-      (response) => {
-        
-       var nuevoArray = [];
-       response.forEach(element => {
-        nuevoArray.push({
-          nombre_encuesta: element.nombre,
-          pregunta: element.pregunta,
-          nombre_respuesta: element.nombre_respuesta,
-          imagen:element.image
-        })
-       });
+    const dialogRef = this.dialog.open(ModalBienvenidaComponent, {
+      width: "800px",
+    });
 
-        
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === "true") {
+        this.id_tienda = tienda;
+        this.id_encuesta = id_aplicacionEncuesta;
+        this.mostrar_encuesta = [];
+        this.ServicesProvider.get(SERVICES.MOSTRAR_ENCUESTA + id, {}).then(
+          (response) => {
+            var nuevoArray = [];
+            response.forEach((element) => {
+              nuevoArray.push({
+                nombre_encuesta: element.nombre,
+                pregunta: element.pregunta,
+                nombre_respuesta: element.nombre_respuesta,
+                imagen: element.image,
+              });
+            });
 
-        this.mostrar_encuesta = nuevoArray;
-        console.log(nuevoArray);
-        this.bMostarTabla=false;
+            this.mostrar_encuesta = nuevoArray;
+            console.log(nuevoArray);
+            this.bMostarTabla = false;
+          }
+        );
       }
-    );
+    });
   }
-  aRespuestas=[]
-  aListaRespuesta=[]
+  aRespuestas = [];
+  aListaRespuesta = [];
   fn_preguntaRespuesta(pregunta, respuesta, posicion) {
     this.aRespuestas[posicion] = {
-      pregunta:pregunta,
-      respuesta:respuesta
-    }
-    console.log(this.aRespuestas)
-/*     console.log(this.aListaRespuesta)
+      pregunta: pregunta,
+      respuesta: respuesta,
+    };
+    console.log(this.aRespuestas);
+    /*     console.log(this.aListaRespuesta)
     console.log(pregunta, respuesta);
     let preguntaRepetida=false
     this.aPregunta = [];
@@ -129,9 +146,14 @@ export class AplicarEncuestaComponent implements OnInit {
       solucion: this.aRespuestas,
     };
     console.log(encuesta_responder);
-         this.ServicesProvider.post(SERVICES.LLENAR_ENCUESTA, encuesta_responder, false, this.user).then((response) => {
+    this.ServicesProvider.post(
+      SERVICES.LLENAR_ENCUESTA,
+      encuesta_responder,
+      false,
+      this.user
+    ).then((response) => {
       console.log(response);
-          this.aRespuestas = [];
+      this.aRespuestas = [];
       Swal.fire({
         position: "center",
         icon: "success",
@@ -139,7 +161,15 @@ export class AplicarEncuestaComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500,
       });
-      this.bMostarTabla=true;
-    }); 
+      this.bMostarTabla = true;
+    });
+  }
+
+  touchTerms(check) {
+    this.aceptar = check === true ? false : true;
+  }
+
+  changeTab() {
+    this.tab += 1;
   }
 }

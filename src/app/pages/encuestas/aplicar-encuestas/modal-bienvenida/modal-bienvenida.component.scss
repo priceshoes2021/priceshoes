@@ -1,0 +1,37 @@
+.card {
+  background-color: rgb(255, 255, 255);
+  border: none;
+}
+
+.card-header {
+  background: none;
+  border: none;
+}
+
+.card-title {
+  font-size: 20px;
+  color: rgb(52, 79, 196);
+}
+
+.card-content {
+  text-align: justify;
+  margin: auto 20px;
+}
+
+.buttons {
+  display: flex;
+  margin: 30px auto;
+  justify-content: center;
+}
+
+.button-success {
+  margin: 5px;
+  color: #75b245;
+  border-color: #75b245;
+}
+
+.button-cancel {
+  margin: 5px;
+  color: #b82c19;
+  border-color: #b82c19;
+}
