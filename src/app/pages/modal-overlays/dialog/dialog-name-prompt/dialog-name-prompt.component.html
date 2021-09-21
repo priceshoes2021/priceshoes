@@ -5,10 +5,26 @@
   <nb-card-body>
     <form [formGroup]="formEncuesta">
       <div>
-        <input nbInput placeholder="Nombre de la Encuesta" formControlName="enc_nombre" type="text" />
+        <input
+          nbInput
+          placeholder="Nombre de la Encuesta"
+          formControlName="enc_nombre"
+          type="text"
+        />
       </div>
       <div>
-        <input nbInput placeholder="Descripcion" formControlName="enc_descripcion" />
+        <input
+          nbInput
+          placeholder="Descripción"
+          formControlName="enc_descripcion"
+        />
+      </div>
+      <div>
+        <input
+          nbInput
+          placeholder="Mensaje de bienvenida"
+          formControlName="enc_mensaje"
+        />
       </div>
       <div formArrayName="enc_pregunta">
         <div *ngFor="let pregunta of enc_pregunta.controls; let i = index">
@@ -35,7 +51,19 @@
                       formControlName="nombrePregunta"
                     />
                   </div>
-<!--                   <div  class="pointer" title="Cargar imágen" placement="left" (click)="fn_callFile()" >
+                  <div class="col-md-11">
+                    <nb-select
+                      placeholder="Tipo de pregunta"
+                      formControlName="tipoPregunta"
+                    >
+                      <nb-option
+                        *ngFor="let type of questionType"
+                        [value]="type.id"
+                        >{{ type.name }}</nb-option
+                      >
+                    </nb-select>
+                  </div>
+                  <!--                   <div  class="pointer" title="Cargar imágen" placement="left" (click)="fn_callFile()" >
                     <input type="file" id="inputfile"  (change)="fileChange($event)"  class="d-none"     formControlName="eve_imagen" accept="image/*" >
                     <span *ngIf="!preview">
                       <p class="card-text m-0 p-0 text-center mt-2">Cargar imágen</p>
@@ -50,10 +78,14 @@
                     </span>
   
                 </div> -->
-                <input type="file" accept="image/*" (change)="showPreview($event)" />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    (change)="showPreview($event)"
+                  />
 
-                <!-- Image Preview -->
-<!--                 <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                  <!-- Image Preview -->
+                  <!--                 <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
                   <img [src]="imageURL" [alt]="formPregunta.value.name">
                 </div> -->
                 </div>

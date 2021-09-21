@@ -26,6 +26,13 @@ export class DialogNamePromptComponent implements OnInit {
   respuestas = "";
   preview: any = false;
 
+  questionType = [
+    { id: "si-no", name: "Si / No" },
+    { id: "calificacion-emoji", name: "Selección única emojis" },
+    { id: "opciones-unica", name: "Selección única opciones" },
+    { id: "abierta", name: "Pregunta abierta" },
+  ];
+
   preguntas = [
     {
       nombre: this.contadorPreguntas + ". " + "Pregunta",
@@ -46,6 +53,7 @@ export class DialogNamePromptComponent implements OnInit {
       enc_pregunta: this.fb.array([]),
       enc_nombre: ["", []],
       enc_descripcion: ["", []],
+      enc_mensaje: ["", []],
     });
   }
 
@@ -54,6 +62,9 @@ export class DialogNamePromptComponent implements OnInit {
   }
   get enc_descripcion() {
     return this.formEncuesta.get("enc_descripcion");
+  }
+  get enc_mensaje() {
+    return this.formEncuesta.get("enc_mensaje");
   }
   get eve_imagen() {
     return this.formPregunta.get("eve_imagen");
@@ -64,10 +75,14 @@ export class DialogNamePromptComponent implements OnInit {
   get nombrePregunta() {
     return this.formEncuesta.get("nombrePregunta");
   }
+  get tipoPregunta() {
+    return this.formEncuesta.get("tipoPregunta");
+  }
 
   agregar_pregunta() {
     this.formPregunta = this.fb.group({
       nombrePregunta: new FormControl(""),
+      tipoPregunta: new FormControl(""),
       eve_imagen: ["", []],
       enc_respuesta: this.fb.array([]),
     });
@@ -114,17 +129,19 @@ export class DialogNamePromptComponent implements OnInit {
       console.log(respuestas);
       preguntas.push({
         nombre: element.nombrePregunta,
+        tipo: element.tipoPregunta,
         respuestas: respuestas,
         image: element.eve_imagen,
       });
-      respuestas=[];
+      respuestas = [];
     });
 
     let encuesta = {
       nombre: this.formEncuesta.get("enc_nombre").value,
       descripcion: this.formEncuesta.get("enc_descripcion").value,
+      mensaje: this.formEncuesta.get("enc_mensaje").value,
       preguntas: preguntas,
-      n_preguntas:preguntas.length
+      n_preguntas: preguntas.length,
     };
     /*     console.log(encuesta, this.formDataEvento); */
     this.ref.close(encuesta);

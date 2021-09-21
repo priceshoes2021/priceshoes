@@ -383,7 +383,55 @@
       </div>
     </nb-card-header>
 
-    <nb-card-body>
+    <!--Tipo Si / No-->
+    <nb-card-body *ngIf="item.tipo_pregunta === 'si-no'">
+      <div class="d-flex justify-content-center card">
+        <h6 class="texto-azul text-center">{{ item.pregunta }}</h6>
+      </div>
+      <div
+        *ngIf="item.imagen != ''"
+        class="imagePreview d-flex justify-content-center"
+      >
+        <img
+          width="200px"
+          height="200px"
+          [src]="item.imagen"
+          [alt]="item.imagen"
+        />
+      </div>
+      <div
+        [id]="i"
+        class="mt-3 d-flex h-100 align-items-center justify-content-center"
+      >
+        <ng-container>
+          <div style="display: flex">
+            <div
+              class="item"
+              style="cursor: pointer"
+              (click)="fn_preguntaRespuesta(item.pregunta, 'si', i)"
+            >
+              <mat-icon class="icon-face">sentiment_satisfied_alt</mat-icon>
+              <p class="item-p">SI</p>
+            </div>
+            <div
+              class="item"
+              style="cursor: pointer"
+              (click)="fn_preguntaRespuesta(item.pregunta, 'no', i)"
+            >
+              <mat-icon class="icon-face">sentiment_very_dissatisfied</mat-icon>
+              <p class="item-p">NO</p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </nb-card-body>
+
+    <!--Seleccion Multiple-->
+    <nb-card-body
+      *ngIf="
+        item.tipo_pregunta === 'opciones-unica' || item.tipo_pregunta === null
+      "
+    >
       <div class="d-flex justify-content-center card">
         <h6 class="texto-azul text-center">{{ item.pregunta }}</h6>
       </div>
@@ -423,6 +471,107 @@
           </button> -->
       </div>
     </nb-card-body>
+
+    <!--Calificación con caritas-->
+    <nb-card-body *ngIf="item.tipo_pregunta === 'calificacion-emoji'">
+      <div class="d-flex justify-content-center card">
+        <h6 class="texto-azul text-center">{{ item.pregunta }}</h6>
+      </div>
+      <div
+        *ngIf="item.imagen != ''"
+        class="imagePreview d-flex justify-content-center"
+      >
+        <img
+          width="200px"
+          height="200px"
+          [src]="item.imagen"
+          [alt]="item.imagen"
+        />
+      </div>
+      <div
+        [id]="i"
+        class="mt-3 d-flex h-100 align-items-center justify-content-center"
+      >
+        <ng-container>
+          <div style="display: flex">
+            <div
+              class="item"
+              style="cursor: pointer"
+              (click)="
+                fn_preguntaRespuesta(item.pregunta, 'NO SABE NO RESPONDE', i)
+              "
+            >
+              <mat-icon class="icon-face">sentiment_neutral</mat-icon>
+            </div>
+            <div
+              class="item"
+              style="cursor: pointer"
+              (click)="fn_preguntaRespuesta(item.pregunta, 'EXCELENTE', i)"
+            >
+              <mat-icon class="icon-face">insert_emoticon</mat-icon>
+            </div>
+            <div
+              class="item"
+              style="cursor: pointer"
+              (click)="fn_preguntaRespuesta(item.pregunta, 'BIEN', i)"
+            >
+              <mat-icon class="icon-face">sentiment_satisfied_alt</mat-icon>
+            </div>
+            <div
+              class="item"
+              style="cursor: pointer"
+              (click)="fn_preguntaRespuesta(item.pregunta, 'REGULAR', i)"
+            >
+              <mat-icon class="icon-face">sentiment_dissatisfied</mat-icon>
+            </div>
+            <div
+              class="item"
+              style="cursor: pointer"
+              (click)="fn_preguntaRespuesta(item.pregunta, 'MALA', i)"
+            >
+              <mat-icon class="icon-face">sentiment_very_dissatisfied</mat-icon>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </nb-card-body>
+
+    <!--Pregunta abierta-->
+    <nb-card-body *ngIf="item.tipo_pregunta === 'abierta'">
+      <div class="d-flex justify-content-center card">
+        <h6 class="texto-azul text-center">{{ item.pregunta }}</h6>
+      </div>
+      <div
+        *ngIf="item.imagen != ''"
+        class="imagePreview d-flex justify-content-center"
+      >
+        <img
+          width="200px"
+          height="200px"
+          [src]="item.imagen"
+          [alt]="item.imagen"
+        />
+      </div>
+      <div
+        [id]="i"
+        class="mt-3 d-flex h-100 align-items-center justify-content-center"
+      >
+        <ng-container>
+          <input
+            nbInput
+            name="inputAbierta"
+            fullWidth
+            placeholder="Respuesta"
+            fieldSize="large"
+            autofocus
+            (keyup)="
+              fn_preguntaRespuesta(item.pregunta, $event.target.value, i)
+            "
+          />
+        </ng-container>
+      </div>
+    </nb-card-body>
+
     <button
       *ngIf="i == mostrar_encuesta.length - 1"
       class="m-2 btn-azul"

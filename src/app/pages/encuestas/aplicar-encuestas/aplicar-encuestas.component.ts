@@ -67,34 +67,39 @@ export class AplicarEncuestaComponent implements OnInit {
   }
 
   fn_MostrartEncuesta(id, tienda, id_aplicacionEncuesta) {
-    const dialogRef = this.dialog.open(ModalBienvenidaComponent, {
-      width: "800px",
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === "true") {
-        this.id_tienda = tienda;
-        this.id_encuesta = id_aplicacionEncuesta;
-        this.mostrar_encuesta = [];
-        this.ServicesProvider.get(SERVICES.MOSTRAR_ENCUESTA + id, {}).then(
-          (response) => {
-            var nuevoArray = [];
-            response.forEach((element) => {
-              nuevoArray.push({
-                nombre_encuesta: element.nombre,
-                pregunta: element.pregunta,
-                nombre_respuesta: element.nombre_respuesta,
-                imagen: element.image,
-              });
-            });
-
-            this.mostrar_encuesta = nuevoArray;
-            console.log(nuevoArray);
-            this.bMostarTabla = false;
-          }
-        );
+    this.id_tienda = tienda;
+    this.id_encuesta = id_aplicacionEncuesta;
+    this.mostrar_encuesta = [];
+    this.ServicesProvider.get(SERVICES.MOSTRAR_ENCUESTA + id, {}).then(
+      (response) => {
+        var nuevoArray = [];
+        console.log(response);
+        response.forEach((element) => {
+          nuevoArray.push({
+            nombre_encuesta: element.nombre,
+            mensaje_bienvenida: element?.mensaje_bienvenida,
+            pregunta: element.pregunta,
+            nombre_respuesta: element?.nombre_respuesta,
+            imagen: element.image,
+            tipo_pregunta: element?.tipo_pregunta,
+          });
+        });
+        this.mostrar_encuesta = nuevoArray;
+        //console.log(nuevoArray);
       }
-    });
+    );
+    setTimeout(() => {
+      const dialogRef = this.dialog.open(ModalBienvenidaComponent, {
+        width: "800px",
+        data: this.mostrar_encuesta[0].mensaje_bienvenida,
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result === "true") {
+          this.bMostarTabla = false;
+        }
+      });
+    }, 300);
   }
   aRespuestas = [];
   aListaRespuesta = [];
