@@ -143,6 +143,7 @@ export class AplicarEncuestaComponent implements OnInit {
   }
 
   fn_llenarEncuesta(id_encuesta) {
+    this.aRespuestas = this.aRespuestas.filter(Boolean);
     console.log(id_encuesta);
 
     let encuesta_responder = {
@@ -162,12 +163,14 @@ export class AplicarEncuestaComponent implements OnInit {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Encuesta Guardada con éxito",
+        title: "¡¡Gracias por compartir tu experiencia!!",
+        text: "Con tu ayuda buscaremos ser tu compañía al caminar.",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
       });
       this.bMostarTabla = true;
     });
+    this.tab = 0;
   }
 
   touchTerms(check) {
@@ -176,5 +179,16 @@ export class AplicarEncuestaComponent implements OnInit {
 
   changeTab() {
     this.tab += 1;
+  }
+
+  onChangeObj(newObj) {
+    console.log(newObj);
+  }
+
+  checkSelected(i, resp) {
+    if (this.aRespuestas[i]?.respuesta === resp) {
+      return true;
+    }
+    return false;
   }
 }

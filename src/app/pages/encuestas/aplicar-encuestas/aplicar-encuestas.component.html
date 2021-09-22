@@ -61,10 +61,10 @@
         style="justify-content: center"
       >
         <p
-          width="48%"
+          width="28%"
           style="
             align-self: end;
-            width: 50%;
+            width: 30%;
             margin-right: 4px;
             text-align: right;
           "
@@ -73,7 +73,7 @@
         </p>
 
         <mat-select
-          width="48%"
+          width="32%"
           style="
             align-self: start;
             width: 40%;
@@ -81,8 +81,11 @@
             margin-left: 4px;
             border: 1px solid rgb(83, 83, 83);
           "
+          (selectionChange)="
+            fn_preguntaRespuesta('Tipo de documento', $event.value, 0)
+          "
         >
-          <mat-option *ngFor="let item of tiposDocumento">
+          <mat-option *ngFor="let item of tiposDocumento" [value]="item.id">
             {{ item.name }}</mat-option
           >
         </mat-select>
@@ -94,10 +97,10 @@
         style="justify-content: center"
       >
         <p
-          width="48%"
+          width="28%"
           style="
             align-self: end;
-            width: 50%;
+            width: 30%;
             margin-right: 4px;
             text-align: right;
           "
@@ -106,12 +109,15 @@
         </p>
         <input
           type="number"
-          width="48%"
+          width="32%"
           style="
             align-self: start;
             width: 40%;
             margin-left: 0;
             margin-left: 4px;
+          "
+          (keyup)="
+            fn_preguntaRespuesta('Número de Documento', $event.target.value, 1)
           "
         />
       </div>
@@ -122,10 +128,10 @@
         style="justify-content: center"
       >
         <p
-          width="48%"
+          width="28%"
           style="
             align-self: end;
-            width: 50%;
+            width: 30%;
             margin-right: 4px;
             text-align: right;
           "
@@ -134,13 +140,15 @@
         </p>
         <input
           type="text"
-          width="48%"
+          width="32%"
           style="
             align-self: start;
             width: 40%;
             margin-left: 0;
             margin-left: 4px;
           "
+          (keyup)="fn_preguntaRespuesta('Nombres', $event.target.value, 2)"
+          required="required"
         />
       </div>
       <div
@@ -150,10 +158,10 @@
         style="justify-content: center"
       >
         <p
-          width="48%"
+          width="28%"
           style="
             align-self: end;
-            width: 50%;
+            width: 30%;
             margin-right: 4px;
             text-align: right;
           "
@@ -162,13 +170,14 @@
         </p>
         <input
           type="text"
-          width="48%"
+          width="32%"
           style="
             align-self: start;
             width: 40%;
             margin-left: 0;
             margin-left: 4px;
           "
+          (keyup)="fn_preguntaRespuesta('Apellidos', $event.target.value, 3)"
         />
       </div>
       <div
@@ -178,10 +187,10 @@
         style="justify-content: center"
       >
         <p
-          width="48%"
+          width="28%"
           style="
             align-self: end;
-            width: 50%;
+            width: 30%;
             margin-right: 4px;
             text-align: right;
           "
@@ -190,12 +199,15 @@
         </p>
         <input
           type="date"
-          width="48%"
+          width="32%"
           style="
             align-self: start;
             width: 40%;
             margin-left: 0;
             margin-left: 4px;
+          "
+          (change)="
+            fn_preguntaRespuesta('Fecha de cumpleaños', $event.target.value, 4)
           "
         />
       </div>
@@ -206,10 +218,10 @@
         style="justify-content: center"
       >
         <p
-          width="48%"
+          width="28%"
           style="
             align-self: end;
-            width: 50%;
+            width: 30%;
             margin-right: 4px;
             text-align: right;
           "
@@ -218,12 +230,15 @@
         </p>
         <input
           type="email"
-          width="48%"
+          width="32%"
           style="
             align-self: start;
             width: 40%;
             margin-left: 0;
             margin-left: 4px;
+          "
+          (keyup)="
+            fn_preguntaRespuesta('Correo electrónico', $event.target.value, 5)
           "
         />
       </div>
@@ -234,10 +249,10 @@
         style="justify-content: center"
       >
         <p
-          width="48%"
+          width="28%"
           style="
             align-self: end;
-            width: 50%;
+            width: 30%;
             margin-right: 4px;
             text-align: right;
           "
@@ -246,12 +261,15 @@
         </p>
         <input
           type="number"
-          width="48%"
+          width="32%"
           style="
             align-self: start;
             width: 40%;
             margin-left: 0;
             margin-left: 4px;
+          "
+          (keyup)="
+            fn_preguntaRespuesta('Número de teléfono', $event.target.value, 6)
           "
         />
       </div>
@@ -299,7 +317,7 @@
 <div *ngIf="!bMostarTabla && tab === 1">
   <nb-card>
     <nb-card-header class="card-header">
-      <nb-card-title class="card-title"> Hola!!! </nb-card-title>
+      <nb-card-title class="card-title"> Hola !!! </nb-card-title>
       <p>
         Para el desarrollo de esta encuesta encontraras unos niveles de
         calificacion que te permitiran mas facilmente asignar una respuesta a
@@ -359,6 +377,7 @@
     </nb-card-content>
   </nb-card>
 </div>
+
 <div *ngIf="!bMostarTabla && tab === 2">
   <nb-card *ngFor="let item of mostrar_encuesta; let i = index">
     <nb-card-header>
@@ -408,17 +427,25 @@
             <div
               class="item"
               style="cursor: pointer"
-              (click)="fn_preguntaRespuesta(item.pregunta, 'si', i)"
+              (click)="fn_preguntaRespuesta(item.pregunta, 'si', i + 6)"
             >
-              <mat-icon class="icon-face">sentiment_satisfied_alt</mat-icon>
+              <mat-icon
+                class="icon-face"
+                [ngClass]="{ selected: checkSelected(i + 6, 'si') === true }"
+                >sentiment_satisfied_alt</mat-icon
+              >
               <p class="item-p">SI</p>
             </div>
             <div
               class="item"
               style="cursor: pointer"
-              (click)="fn_preguntaRespuesta(item.pregunta, 'no', i)"
+              (click)="fn_preguntaRespuesta(item.pregunta, 'no', i + 6)"
             >
-              <mat-icon class="icon-face">sentiment_very_dissatisfied</mat-icon>
+              <mat-icon
+                class="icon-face"
+                [ngClass]="{ selected: checkSelected(i + 6, 'no') === true }"
+                >sentiment_very_dissatisfied</mat-icon
+              >
               <p class="item-p">NO</p>
             </div>
           </div>
@@ -455,7 +482,7 @@
             class="m-2"
             nbButton
             [status]="'info'"
-            (click)="fn_preguntaRespuesta(item.pregunta, respuesta, i)"
+            (click)="fn_preguntaRespuesta(item.pregunta, respuesta, i + 6)"
           >
             <!--  <i class="mx-1 icon-size fa fa-grin-beam text-white icon pointer" ></i> -->{{
               respuesta
@@ -498,38 +525,72 @@
               class="item"
               style="cursor: pointer"
               (click)="
-                fn_preguntaRespuesta(item.pregunta, 'NO SABE NO RESPONDE', i)
+                fn_preguntaRespuesta(
+                  item.pregunta,
+                  'NO SABE NO RESPONDE',
+                  i + 6
+                )
               "
             >
-              <mat-icon class="icon-face">sentiment_neutral</mat-icon>
+              <mat-icon
+                class="icon-face"
+                [ngClass]="{
+                  selected: checkSelected(i + 6, 'NO SABE NO RESPONDE') === true
+                }"
+                >sentiment_neutral</mat-icon
+              >
             </div>
             <div
               class="item"
               style="cursor: pointer"
-              (click)="fn_preguntaRespuesta(item.pregunta, 'EXCELENTE', i)"
+              (click)="fn_preguntaRespuesta(item.pregunta, 'EXCELENTE', i + 6)"
             >
-              <mat-icon class="icon-face">insert_emoticon</mat-icon>
+              <mat-icon
+                class="icon-face"
+                [ngClass]="{
+                  selected: checkSelected(i + 6, 'EXCELENTE') === true
+                }"
+                >insert_emoticon</mat-icon
+              >
             </div>
             <div
               class="item"
               style="cursor: pointer"
-              (click)="fn_preguntaRespuesta(item.pregunta, 'BIEN', i)"
+              (click)="fn_preguntaRespuesta(item.pregunta, 'BIEN', i + 6)"
             >
-              <mat-icon class="icon-face">sentiment_satisfied_alt</mat-icon>
+              <mat-icon
+                class="icon-face"
+                [ngClass]="{
+                  selected: checkSelected(i + 6, 'BIEN') === true
+                }"
+                >sentiment_satisfied_alt</mat-icon
+              >
             </div>
             <div
               class="item"
               style="cursor: pointer"
-              (click)="fn_preguntaRespuesta(item.pregunta, 'REGULAR', i)"
+              (click)="fn_preguntaRespuesta(item.pregunta, 'REGULAR', i + 6)"
             >
-              <mat-icon class="icon-face">sentiment_dissatisfied</mat-icon>
+              <mat-icon
+                class="icon-face"
+                [ngClass]="{
+                  selected: checkSelected(i + 6, 'REGULAR') === true
+                }"
+                >sentiment_dissatisfied</mat-icon
+              >
             </div>
             <div
               class="item"
               style="cursor: pointer"
-              (click)="fn_preguntaRespuesta(item.pregunta, 'MALA', i)"
+              (click)="fn_preguntaRespuesta(item.pregunta, 'MALA', i + 6)"
             >
-              <mat-icon class="icon-face">sentiment_very_dissatisfied</mat-icon>
+              <mat-icon
+                class="icon-face"
+                [ngClass]="{
+                  selected: checkSelected(i + 6, 'MALA') === true
+                }"
+                >sentiment_very_dissatisfied</mat-icon
+              >
             </div>
           </div>
         </ng-container>
@@ -565,7 +626,7 @@
             fieldSize="large"
             autofocus
             (keyup)="
-              fn_preguntaRespuesta(item.pregunta, $event.target.value, i)
+              fn_preguntaRespuesta(item.pregunta, $event.target.value, i + 6)
             "
           />
         </ng-container>
