@@ -7,7 +7,7 @@ import { Component } from "@angular/core";
     <span class="created-by"> </span>
     <div class="footer">
       <div class="support d-flex">
-        <h5>Con el apoyo de:</h5>
+        <h5 class="m-r-3">Con el apoyo de:</h5>
         <img
           width="160px"
           src="assets/images/sena-support.jpeg"
