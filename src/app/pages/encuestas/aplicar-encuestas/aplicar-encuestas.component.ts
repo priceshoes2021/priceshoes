@@ -82,10 +82,11 @@ export class AplicarEncuestaComponent implements OnInit {
             nombre_respuesta: element?.nombre_respuesta,
             imagen: element.image,
             tipo_pregunta: element?.tipo_pregunta,
+            porque_pregunta: element?.porque_pregunta,
           });
         });
         this.mostrar_encuesta = nuevoArray;
-        //console.log(nuevoArray);
+        console.log("nuevoArray", nuevoArray);
       }
     );
     setTimeout(() => {
@@ -140,6 +141,11 @@ export class AplicarEncuestaComponent implements OnInit {
     }
     this.aRespuestas.push(this.aPregunta[0])
     console.log(this.aPregunta, this.aRespuestas); */
+  }
+
+  fn_preguntaRespuestaPorque(pregunta, porque, posicion) {
+    this.aRespuestas[posicion].porque = porque; 
+    console.log(this.aRespuestas);
   }
 
   fn_llenarEncuesta(id_encuesta) {

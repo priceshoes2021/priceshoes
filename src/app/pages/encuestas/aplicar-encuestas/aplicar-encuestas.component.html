@@ -451,9 +451,31 @@
           </div>
         </ng-container>
       </div>
+      <div
+        class="d-flex"
+        style="margin: 30px; align-items: center"
+        *ngIf="item.porque_pregunta === 1"
+      >
+        <input
+          nbInput
+          name="inputPorque"
+          fullWidth
+          placeholder="Porqué?"
+          fieldSize="large"
+          autofocus
+          style="margin: auto"
+          (keyup)="
+            fn_preguntaRespuestaPorque(
+              item.pregunta,
+              $event.target.value,
+              i + 6
+            )
+          "
+        />
+      </div>
     </nb-card-body>
 
-    <!--Seleccion Multiple-->
+    <!--Seleccion Multiple con única respuesta-->
     <nb-card-body
       *ngIf="
         item.tipo_pregunta === 'opciones-unica' || item.tipo_pregunta === null
@@ -489,13 +511,28 @@
             }}
           </button>
         </ng-container>
-
-        <!--                 <button class="m-2" nbButton [status]="'warning'" (click)="fn_preguntaRespuesta(item.pregunta, 'Regular')">
-            <i class="mx-1 icon-size fa fa-meh text-white icon pointer" ></i>Regular
-          </button>
-                <button class="m-2" nbButton [status]="'danger'" (click)="fn_preguntaRespuesta(item.pregunta, 'Malo')">
-            <i class="mx-1 icon-size fa fa-angry text-white icon pointer"></i>Malo
-          </button> -->
+      </div>
+      <div
+        class="d-flex"
+        style="margin: 30px; align-items: center"
+        *ngIf="item.porque_pregunta === 1"
+      >
+        <input
+          nbInput
+          name="inputPorque"
+          fullWidth
+          placeholder="Porqué?"
+          fieldSize="large"
+          autofocus
+          style="margin: auto"
+          (keyup)="
+            fn_preguntaRespuestaPorque(
+              item.pregunta,
+              $event.target.value,
+              i + 6
+            )
+          "
+        />
       </div>
     </nb-card-body>
 
@@ -517,10 +554,10 @@
       </div>
       <div
         [id]="i"
-        class="mt-3 d-flex h-100 align-items-center justify-content-center"
+        class="mt-3 h-100 align-items-center justify-content-center"
       >
         <ng-container>
-          <div style="display: flex">
+          <div style="display: flex; justify-content: space-around">
             <div
               class="item"
               style="cursor: pointer"
@@ -593,6 +630,29 @@
               >
             </div>
           </div>
+
+          <div
+            class="d-flex"
+            style="margin: 30px; align-items: center"
+            *ngIf="item.porque_pregunta === 1"
+          >
+            <input
+              nbInput
+              name="inputPorque"
+              fullWidth
+              placeholder="Porqué?"
+              fieldSize="large"
+              autofocus
+              style="margin: auto"
+              (keyup)="
+                fn_preguntaRespuestaPorque(
+                  item.pregunta,
+                  $event.target.value,
+                  i + 6
+                )
+              "
+            />
+          </div>
         </ng-container>
       </div>
     </nb-card-body>
@@ -630,6 +690,63 @@
             "
           />
         </ng-container>
+      </div>
+    </nb-card-body>
+
+    <!--Selección multiple con multiple respuesta-->
+    <nb-card-body *ngIf="item.tipo_pregunta === 'opciones-multiple'">
+      <div class="d-flex justify-content-center card">
+        <h6 class="texto-azul text-center">{{ item.pregunta }}</h6>
+      </div>
+      <div
+        *ngIf="item.imagen != ''"
+        class="imagePreview d-flex justify-content-center"
+      >
+        <img
+          width="200px"
+          height="200px"
+          [src]="item.imagen"
+          [alt]="item.imagen"
+        />
+      </div>
+      <div
+        [id]="i"
+        class="mt-3 d-flex h-100 align-items-center justify-content-center"
+      >
+        <ng-container *ngFor="let respuesta of item['nombre_respuesta']">
+          <button
+            class="m-2"
+            nbButton
+            [status]="'info'"
+            (click)="fn_preguntaRespuesta(item.pregunta, respuesta, i + 6)"
+          >
+            <!--  <i class="mx-1 icon-size fa fa-grin-beam text-white icon pointer" ></i> -->{{
+              respuesta
+            }}
+          </button>
+        </ng-container>
+      </div>
+      <div
+        class="d-flex"
+        style="margin: 30px; align-items: center"
+        *ngIf="item.porque_pregunta === 1"
+      >
+        <input
+          nbInput
+          name="inputPorque"
+          fullWidth
+          placeholder="Porqué?"
+          fieldSize="large"
+          autofocus
+          style="margin: auto"
+          (keyup)="
+            fn_preguntaRespuestaPorque(
+              item.pregunta,
+              $event.target.value,
+              i + 6
+            )
+          "
+        />
       </div>
     </nb-card-body>
 

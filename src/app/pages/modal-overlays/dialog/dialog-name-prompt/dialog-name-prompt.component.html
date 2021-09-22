@@ -63,6 +63,11 @@
                       >
                     </nb-select>
                   </div>
+                  <div class="col-md-4">
+                    <nb-checkbox formControlName="porquePregunta">
+                      Porqué de pregunta
+                    </nb-checkbox>
+                  </div>
                   <!--                   <div  class="pointer" title="Cargar imágen" placement="left" (click)="fn_callFile()" >
                     <input type="file" id="inputfile"  (change)="fileChange($event)"  class="d-none"     formControlName="eve_imagen" accept="image/*" >
                     <span *ngIf="!preview">
@@ -79,6 +84,7 @@
   
                 </div> -->
                   <input
+                    class="col-md-6"
                     type="file"
                     accept="image/*"
                     (change)="showPreview($event)"

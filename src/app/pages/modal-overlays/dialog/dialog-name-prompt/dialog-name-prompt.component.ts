@@ -30,6 +30,7 @@ export class DialogNamePromptComponent implements OnInit {
     { id: "si-no", name: "Si / No" },
     { id: "calificacion-emoji", name: "Selección única emojis" },
     { id: "opciones-unica", name: "Selección única opciones" },
+    { id: "opciones-multiple", name: "Selección multiple opciones" },
     { id: "abierta", name: "Pregunta abierta" },
   ];
 
@@ -78,11 +79,15 @@ export class DialogNamePromptComponent implements OnInit {
   get tipoPregunta() {
     return this.formEncuesta.get("tipoPregunta");
   }
+  get porquePregunta() {
+    return this.formEncuesta.get("porquePregunta");
+  }
 
   agregar_pregunta() {
     this.formPregunta = this.fb.group({
       nombrePregunta: new FormControl(""),
       tipoPregunta: new FormControl(""),
+      porquePregunta: new FormControl(false),
       eve_imagen: ["", []],
       enc_respuesta: this.fb.array([]),
     });
@@ -130,6 +135,7 @@ export class DialogNamePromptComponent implements OnInit {
       preguntas.push({
         nombre: element.nombrePregunta,
         tipo: element.tipoPregunta,
+        porque:element.porquePregunta,
         respuestas: respuestas,
         image: element.eve_imagen,
       });
