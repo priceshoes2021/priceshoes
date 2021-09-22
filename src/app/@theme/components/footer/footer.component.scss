@@ -1,6 +1,6 @@
-@import '../../styles/themes';
-@import '~@nebular/theme/styles/global/breakpoints';
-@import '~bootstrap/scss/mixins/breakpoints';
+@import "../../styles/themes";
+@import "~@nebular/theme/styles/global/breakpoints";
+@import "~bootstrap/scss/mixins/breakpoints";
 
 @include nb-install-component() {
   width: 100%;
@@ -8,9 +8,15 @@
   justify-content: space-between;
   align-items: center;
 
-  .socials {
-    font-size: 2rem;
+  .footer {
+    align-items: center;
+    justify-content: end;
+    display: flex;
+  }
 
+  .socials {
+    font-size: 3rem;
+    margin: 0 20px;
     a {
       padding: 0.4rem;
       color: nb-theme(text-hint-color);
