@@ -23,6 +23,7 @@ import {
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
+  NbToggleModule
 } from "@nebular/theme";
 import { EncuestaComponent } from "./encuesta.component";
 import { AsignarEncuestaComponent } from "./asignar-encuestas/asignar-encuestas.component";
@@ -61,6 +62,7 @@ import { DemoMaterialModule } from "../../demo-material-module";
     NbInputModule,
     NbRadioModule,
     NbSelectModule,
+    NbToggleModule
   ],
 
   declarations: [

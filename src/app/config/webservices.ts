@@ -1,5 +1,5 @@
-export const URL = "https://apipriceshoes.herokuapp.com/";
-//export const URL = "http://localhost:3000/";
+//export const URL = "https://apipriceshoes.herokuapp.com/";
+export const URL = "http://localhost:3000/";
 export const SERVICES = {
   LISTAR_TIENDAS: "tiendas",
   //Encuestas

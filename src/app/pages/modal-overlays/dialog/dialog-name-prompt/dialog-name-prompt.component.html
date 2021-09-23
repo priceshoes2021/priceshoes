@@ -29,27 +29,16 @@
       <div formArrayName="enc_pregunta">
         <div *ngFor="let pregunta of enc_pregunta.controls; let i = index">
           <nb-card>
-            <nb-card-header class="header-color"
-              >Pregunta {{ i + 1 }}
-              <i
-                class="color_icono_pregunta mx-1 fa fa-trash icon"
-                nbTooltip="Eliminar Pregunta"
-                nbTooltipPlacement="top"
-                nbTooltipStatus="danger"
-                (click)="borrarPregunta(i)"
-              ></i
-            ></nb-card-header>
+            <nb-card-header class="header-color">Pregunta {{ i + 1 }}
+              <i class="color_icono_pregunta mx-1 fa fa-trash icon" nbTooltip="Eliminar Pregunta"
+                nbTooltipPlacement="top" nbTooltipStatus="danger" (click)="borrarPregunta(i)"></i>
+            </nb-card-header>
             <nb-card-body>
               <div [formGroupName]="i">
                 <div class="form-group row">
                   <div class="col-md-11">
                     <!--   <input type="text" [attr.id]="'item' + i" class="form-control" formControlName="nombre_pregunta"> -->
-                    <input
-                      nbInput
-                      placeholder="Pregunta"
-                      class="form-control"
-                      formControlName="nombrePregunta"
-                    />
+                    <input nbInput placeholder="Pregunta" class="form-control" formControlName="nombrePregunta" />
                   </div>
                   <div class="col-md-11">
                     <nb-select
@@ -102,32 +91,23 @@
                   </ul>
                 </div> -->
                 <div formArrayName="enc_respuesta">
-                  <div
-                    *ngFor="
+                  <div *ngFor="
                       let respuesta of enc_pregunta.controls[i]['controls']
                         .enc_respuesta.controls;
                       let j = index
-                    "
-                  >
+                    ">
                     <div class="form-group row">
+
                       <div [formGroupName]="j" class="col-md-11">
                         <div>
-                          <input
-                            nbInput
-                            placeholder="Respuesta"
-                            class="form-control"
-                            formControlName="nombreRespuesta"
-                          />
+
+                          <input nbInput placeholder="Respuesta" class="form-control"
+                            formControlName="nombreRespuesta" />
                         </div>
                       </div>
                       <div class="col-md-1">
-                        <i
-                          class="color_icono_respuesta mx-1 fa fa-trash icon"
-                          nbTooltip="Eliminar Respuesta"
-                          nbTooltipPlacement="top"
-                          nbTooltipStatus="danger"
-                          (click)="borrarRespuesta(j)"
-                        ></i>
+                        <i class="color_icono_respuesta mx-1 fa fa-trash icon" nbTooltip="Eliminar Respuesta"
+                          nbTooltipPlacement="top" nbTooltipStatus="danger" (click)="borrarRespuesta(j)"></i>
                       </div>
                     </div>
 
@@ -135,34 +115,21 @@
                   </div>
                 </div>
               </div>
-
+              <nb-checkbox (change)="agregar_respuesta($event)">Escala de emociones</nb-checkbox>
               <div class="">
-                <button
-                  type="submit"
-                  nbButton
-                  (click)="agregar_respuesta()"
-                  [status]="'success'"
-                  [size]="'small'"
-                  ghost
-                >
+                <button type="submit" nbButton (click)="agregar_respuesta()" [status]="'success'" [size]="'small'" ghost>
                   Respuestas +
                 </button>
               </div>
             </nb-card-body>
-            <nb-card-footer> </nb-card-footer>
+            <nb-card-footer></nb-card-footer>
           </nb-card>
 
           <hr />
         </div>
       </div>
     </form>
-    <button
-      class="mb-2"
-      nbButton
-      (click)="agregar_pregunta()"
-      [status]="'info'"
-      outline
-    >
+    <button class="mb-2" nbButton (click)="agregar_pregunta()" [status]="'info'" outline>
       Añadir preguntas
     </button>
   </nb-card-body>
@@ -170,12 +137,7 @@
     <button class="cancel" nbButton status="danger" (click)="cancel()">
       Cancelar
     </button>
-    <button
-      nbButton
-      type="button"
-      (click)="fn_guardarEncuesta()"
-      status="success"
-    >
+    <button nbButton type="button" (click)="fn_guardarEncuesta()" status="success">
       Aceptar
     </button>
   </nb-card-footer>

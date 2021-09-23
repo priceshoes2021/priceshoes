@@ -1,6 +1,7 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { getDeepFromObject, NbAuthJWTToken, NbAuthModule, NbDummyAuthStrategy, NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions } from '@nebular/auth';
+import { getDeepFromObject, NbAuthJWTToken, NbAuthModule, NbDummyAuthStrategy, 
+NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -73,9 +74,7 @@ const socialLinks = [
     icon: 'twitter',
   },
 ];
-
 const  usuario=[]
-
 const DATA_SERVICES = [
   { provide: UserData, useClass: UserService },
   { provide: ElectricityData, useClass: ElectricityService },
@@ -97,16 +96,12 @@ const DATA_SERVICES = [
   { provide: VisitorsAnalyticsData, useClass: VisitorsAnalyticsService },
   { provide: SecurityCamerasData, useClass: SecurityCamerasService },
 ];
-
-
-
 export class NbSimpleRoleProvider extends NbRoleProvider {
   getRole() {
     // here you could provide any role based on any auth flow
     return observableOf('guest');
   }
 }
-
 export const NB_CORE_PROVIDERS = [
   ...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
@@ -121,7 +116,8 @@ export const NB_CORE_PROVIDERS = [
         token: {
           key: 'token',
           class:NbAuthJWTToken,
-          getter: (module: string, res: HttpResponse<Object>, options: NbPasswordAuthStrategyOptions) => getDeepFromObject(
+          getter: (module: string, res: HttpResponse<Object>, 
+            options: NbPasswordAuthStrategyOptions) => getDeepFromObject(
             res.body,
             options.token.key,
           ),

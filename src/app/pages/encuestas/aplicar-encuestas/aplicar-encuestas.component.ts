@@ -24,6 +24,8 @@ import { MatDialog } from "@angular/material/dialog";
   styleUrls: ["aplicar-encuestas.component.scss"],
 })
 export class AplicarEncuestaComponent implements OnInit {
+
+  
   //Variables
   mostrar_encuesta: any;
   encuestasAsignadas;

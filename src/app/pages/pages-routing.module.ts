@@ -106,7 +106,7 @@ const routes: Routes = [{
     
     {
       path: '',
-      redirectTo: 'dashboard',
+      redirectTo: 'encuestas/aplicar-encuestas',
       pathMatch: 'full',
     },
     {
